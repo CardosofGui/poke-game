@@ -1,10 +1,15 @@
-package com.example.pokegame
+package com.example.pokegame.presenter.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.pokegame.databinding.FragmentLeaderboardBinding
+import com.example.pokegame.framework.viewmodel.RecordViewModel
+import com.example.pokegame.presenter.adapter.LeaderboardAdapter
+import com.example.pokegame.presenter.fragments.GameFragment.Companion.listRecords
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +26,11 @@ class LeaderboardFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding : FragmentLeaderboardBinding
+    private lateinit var leaderboardAdapter: LeaderboardAdapter
+
+    private val leaderboardViewModel : RecordViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +43,47 @@ class LeaderboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leaderboard, container, false)
+        binding = FragmentLeaderboardBinding.inflate(inflater, container, false)
+
+        initRecycler()
+        initObserver()
+
+        return binding.root
+    }
+
+    private fun initObserver() {
+        leaderboardViewModel.allRecords.observe(requireActivity()) {
+            if(!it.isNullOrEmpty()){
+                leaderboardAdapter.updateList(it)
+                hideLoading()
+            }
+        }
+    }
+
+    private fun initRecycler() {
+        leaderboardAdapter = LeaderboardAdapter(listRecords)
+        binding.rcvRecords.adapter = leaderboardAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        leaderboardViewModel.getAllRecords()
+        showLoading()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        leaderboardViewModel.resetRecords()
+    }
+    private fun showLoading() {
+        binding.llLoading.visibility = View.VISIBLE
+        binding.rcvRecords.visibility = View.GONE
+    }
+    private fun hideLoading() {
+        binding.llLoading.visibility = View.GONE
+        binding.rcvRecords.visibility = View.VISIBLE
     }
 
     companion object {

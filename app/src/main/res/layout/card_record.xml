@@ -8,13 +8,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_team_valor">
+        android:layout_height="90dp"
+        android:background="@color/background_team_valor"
+        android:padding="6dp"
+        android:id="@+id/cl_record">
 
         <ImageView
             android:id="@+id/iv_gender"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:scaleType="centerInside"
             android:src="@drawable/treinador"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +26,9 @@
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/alata"
+            android:maxLines="1"
             android:text="#1 - Stoppz"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -35,7 +40,9 @@
             android:id="@+id/tv_points"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/alata"
+            android:maxLines="1"
             android:text="832 Pontos"
             android:textColor="@color/black"
             android:textSize="14sp"

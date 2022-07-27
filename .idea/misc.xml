@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/font/pokefont.xml" value="0.4161458333333333" />
         <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/layout/card_info.xml" value="0.25" />
+        <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/layout/card_player_score.xml" value="0.25" />
         <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/layout/card_record.xml" value="0.33" />
         <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/layout/fragment_game.xml" value="0.33" />
         <entry key="..\:/ProjetosAndroid/poke-game/app/src/main/res/layout/fragment_leaderboard.xml" value="0.33" />

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/item_game"
-        android:name="com.example.pokegame.GameFragment"
+        android:name="com.example.pokegame.presenter.fragments.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" />
     <fragment
         android:id="@+id/item_record"
-        android:name="com.example.pokegame.LeaderboardFragment"
+        android:name="com.example.pokegame.presenter.fragments.LeaderboardFragment"
         android:label="fragment_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
 

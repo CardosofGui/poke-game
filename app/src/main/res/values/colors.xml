@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="background_team_valor">#8FF61207</color>
-    <color name="background_team_mystic">#8F0757F6</color>
-    <color name="background_team_instinct">#8FF6CE07</color>
+    <color name="background_team_valor">#EF564E</color>
+    <color name="background_team_mystic">#5489F1</color>
+    <color name="background_team_instinct">#F3D852</color>
 </resources>

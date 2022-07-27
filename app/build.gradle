@@ -55,4 +55,7 @@ dependencies {
     testImplementation "io.insert-koin:koin-test:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
+    implementation 'io.github.shashank02051997:FancyToast:2.0.1'
 }
