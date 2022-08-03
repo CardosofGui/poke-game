@@ -11,4 +11,6 @@
     <color name="background_team_valor">#EF564E</color>
     <color name="background_team_mystic">#5489F1</color>
     <color name="background_team_instinct">#F3D852</color>
+
+    <color name="hide_pokemon_color">#CCCCCC</color>
 </resources>

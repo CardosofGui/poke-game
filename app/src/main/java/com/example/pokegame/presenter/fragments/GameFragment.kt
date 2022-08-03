@@ -1,16 +1,17 @@
 package com.example.pokegame.presenter.fragments
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import com.example.pokegame.R
 import com.example.pokegame.databinding.FragmentGameBinding
@@ -43,6 +44,8 @@ class GameFragment : Fragment() {
 
     private var timeRunner = 5000
     private lateinit var timerCounter : CountDownTimer
+    private lateinit var winCounter : CountDownTimer
+    private lateinit var lossCounter : CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,13 +154,22 @@ class GameFragment : Fragment() {
         timerCounter.cancel()
 
         if (game.checkResult(result)){
-            gameViewModel.winGame(timeRunner)
-            correctToast()
+            resultWinGame()
         } else {
-            gameViewModel.lossGame()
-            FancyToast.makeText(requireContext(), "Errou!", FancyToast.ERROR, 100, false).show()
+            resultLossGame()
         }
     }
+
+    private fun resultWinGame() {
+        correctToast()
+        winCounter.start()
+    }
+
+    private fun resultLossGame() {
+        FancyToast.makeText(requireContext(), "Errou!", FancyToast.LENGTH_SHORT, FancyToast.ERROR, false).show()
+        lossCounter.start()
+    }
+
     private fun startTimer() {
         timeRunner = 5000
         timerCounter.cancel()
@@ -172,8 +184,36 @@ class GameFragment : Fragment() {
             }
 
             override fun onFinish() {
+                lossCounter.start()
+            }
+        }
+
+        winCounter = object: CountDownTimer(1000, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                ImageViewCompat.setImageTintList(binding.ivPokemonHide, null)
+                activeButtons(false)
+            }
+
+            override fun onFinish() {
+                gameViewModel.winGame(timeRunner)
+                ImageViewCompat.setImageTintList(binding.ivPokemonHide, ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.hide_pokemon_color)))
+                activeButtons(true)
+            }
+        }
+
+        lossCounter = object: CountDownTimer(1000, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                ImageViewCompat.setImageTintList(binding.ivPokemonHide, null)
+                activeButtons(false)
+            }
+
+            override fun onFinish() {
                 gameViewModel.lossGame()
                 timeRunner = 5000
+                ImageViewCompat.setImageTintList(binding.ivPokemonHide, ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.hide_pokemon_color)))
+                activeButtons(true)
             }
         }
     }

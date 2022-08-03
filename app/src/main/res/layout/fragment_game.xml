@@ -112,7 +112,7 @@
             android:src="@drawable/ic_mockup_team"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_who_is"
-            app:tint="#CCCCCC" />
+            app:tint="@color/hide_pokemon_color" />
 
         <Button
             android:id="@+id/btn_option_1"
