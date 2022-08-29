@@ -1,16 +1,13 @@
 package com.example.pokegame.framework
 
 import android.util.Log
-import com.example.pokegame.data.PokemonInterface
 import com.example.pokegame.data.PokemonRepository
-import com.example.pokegame.data.RecordInterface
 import com.example.pokegame.data.RecordRepository
 import com.example.pokegame.framework.viewmodel.GameViewModel
 import com.example.pokegame.framework.viewmodel.RecordViewModel
 import com.example.pokegame.implementation.PokemonImplementation
 import com.example.pokegame.implementation.RecordImplementation
 import io.ktor.client.*
-import io.ktor.client.engine.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
@@ -21,8 +18,6 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 object AppModules {
 

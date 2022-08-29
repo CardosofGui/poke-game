@@ -1,9 +1,7 @@
 package com.example.pokegame.implementation
 
-import com.example.pokegame.data.PokemonInterface
 import com.example.pokegame.domain.PokemonsApiResult
 import io.ktor.client.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
 
 class PokemonImplementation(private val client : HttpClient) {
