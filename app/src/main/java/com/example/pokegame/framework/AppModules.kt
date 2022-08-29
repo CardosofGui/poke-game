@@ -7,6 +7,7 @@ import com.example.pokegame.framework.viewmodel.GameViewModel
 import com.example.pokegame.framework.viewmodel.RecordViewModel
 import com.example.pokegame.implementation.PokemonImplementation
 import com.example.pokegame.implementation.RecordImplementation
+import com.example.pokegame.usecase.GetAllPokemonUseCase
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
@@ -35,6 +36,8 @@ object AppModules {
         single { PokemonRepository(get(), get()) }
 
         single { PokemonImplementation(createService(POKEAPI_BASE)) }
+
+        single { GetAllPokemonUseCase(get()) }
 
         single { RecordRepository(get()) }
 
