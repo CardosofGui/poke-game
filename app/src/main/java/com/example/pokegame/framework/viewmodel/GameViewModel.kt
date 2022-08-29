@@ -21,11 +21,10 @@ class GameViewModel(private val repository: PokemonRepository) : ViewModel() {
 
     var round : MutableLiveData<Int> = MutableLiveData<Int>(0)
 
-    fun getAllPokemon() {
-        Thread {
-            _pokemonList.postValue(repository.getAllPokemon())
-        }.start()
+    fun getAllPokemon() = viewModelScope.launch {
+        _pokemonList.postValue(repository.getAllPokemon())
     }
+
     fun createGame()  {
         val pokemonDataListFiltered = pokemonList.value?.results?.shuffled()?.take(4)
 
@@ -57,10 +56,8 @@ class GameViewModel(private val repository: PokemonRepository) : ViewModel() {
     fun getPoints() = pointsList.sum()
 
 
-    fun insertRecord(userPoints: UserPoints) {
-        Thread{
-            repository.insertRecord(userPoints)
-        }.start()
+    fun insertRecord(userPoints: UserPoints) = viewModelScope.launch {
+        repository.insertRecord(userPoints)
     }
 }
 

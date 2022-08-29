@@ -1,15 +1,19 @@
 package com.example.pokegame.domain
 
 import androidx.core.content.ContextCompat
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class PokemonsApiResult(
+@Serializable
+class PokemonsApiResult(
     val count: Int,
     val next: String?,
     val previous: String?,
     val results: List<PokemonResult>
 )
 
-data class PokemonResult(
+@Serializable
+class PokemonResult(
     val name: String,
     val url: String
 ){
@@ -78,16 +82,23 @@ data class PokemonModel(
     }
 }
 
+@Serializable
 data class Ability(
     val ability : Ability__1
 )
 
+@Serializable
 data class Ability__1(
     val name : String
 )
 
+@Serializable
 data class IndexMoves(val move : Move, val version_group_details : List<IndexLevel>)
+@Serializable
 data class Move(val name : String)
+@Serializable
 data class IndexLevel(val level_learned_at : Int)
+@Serializable
 data class index(val type : type)
+@Serializable
 data class type(val name : String)

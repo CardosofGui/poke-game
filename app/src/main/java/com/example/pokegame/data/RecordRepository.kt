@@ -5,6 +5,6 @@ import com.example.pokegame.implementation.RecordImplementation
 
 class RecordRepository(private val recordImplementation: RecordImplementation) {
 
-    fun getAllRecords() = recordImplementation.getAllRecords()
+    suspend fun getAllRecords() = recordImplementation.getAllRecords()
 
 }

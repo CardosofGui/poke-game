@@ -2,9 +2,11 @@ package com.example.pokegame.framework.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.pokegame.data.PokemonRepository
 import com.example.pokegame.data.RecordRepository
 import com.example.pokegame.domain.UserPoints
+import kotlinx.coroutines.launch
 
 class RecordViewModel(private val recordRepository: RecordRepository) : ViewModel() {
 
@@ -12,10 +14,8 @@ class RecordViewModel(private val recordRepository: RecordRepository) : ViewMode
     val allRecords : MutableLiveData<List<UserPoints>>
         get() = _allRecords
 
-    fun getAllRecords() {
-        Thread {
-            _allRecords.postValue(recordRepository.getAllRecords())
-        }.start()
+    fun getAllRecords() = viewModelScope.launch {
+        recordRepository.getAllRecords()
     }
 
     fun resetRecords() {

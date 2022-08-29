@@ -4,21 +4,13 @@ import com.example.pokegame.data.RecordInterface
 import com.example.pokegame.domain.PokemonsApiResult
 import com.example.pokegame.domain.Result
 import com.example.pokegame.domain.UserPoints
+import io.ktor.client.*
+import io.ktor.client.request.*
 
-class RecordImplementation(private val recordInterface: RecordInterface) {
+class RecordImplementation(private val client : HttpClient) {
 
-    fun getAllRecords(): List<UserPoints>? {
-        val callback = recordInterface.getAllRecords().execute()
+    suspend fun getAllRecords(): List<UserPoints>? = arrayListOf()
 
-        return if (callback.isSuccessful) callback.body()
-        else null
-    }
-
-    fun insertRecord(userPoints: UserPoints): Result? {
-        val callback = recordInterface.insertRecord(userPoints.username, userPoints.points, userPoints.team, userPoints.person).execute()
-
-        return if (callback.isSuccessful) callback.body()
-        else null
-    }
+    suspend fun insertRecord(userPoints: UserPoints): Result? = Result("")
 
 }

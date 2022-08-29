@@ -2,14 +2,12 @@ package com.example.pokegame.implementation
 
 import com.example.pokegame.data.PokemonInterface
 import com.example.pokegame.domain.PokemonsApiResult
+import io.ktor.client.*
+import io.ktor.client.features.*
+import io.ktor.client.request.*
 
-class PokemonImplementation(private val pokemonInterface: PokemonInterface) {
+class PokemonImplementation(private val client : HttpClient) {
 
-    fun getAllPokemon(): PokemonsApiResult? {
-        val callback = pokemonInterface.getAllPokemonList().execute()
-
-        return if (callback.isSuccessful) callback.body()
-        else null
-    }
+    suspend fun getAllPokemon(): PokemonsApiResult = client.get(path = "api/v2/pokemon?limit=386")
 
 }
