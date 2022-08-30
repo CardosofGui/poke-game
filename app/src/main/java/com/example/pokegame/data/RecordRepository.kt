@@ -6,5 +6,6 @@ import com.example.pokegame.implementation.RecordImplementation
 class RecordRepository(private val recordImplementation: RecordImplementation) {
 
     suspend fun getAllRecords() = recordImplementation.getAllRecords()
+    suspend fun insertRecord(userPoints: UserPoints) = recordImplementation.insertRecord(userPoints)
 
 }

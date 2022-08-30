@@ -7,9 +7,10 @@ import com.example.pokegame.domain.Game
 import com.example.pokegame.domain.PokemonResult
 import com.example.pokegame.domain.PokemonsApiResult
 import com.example.pokegame.domain.UserPoints
+import com.example.pokegame.usecase.GameUseCase
 import kotlinx.coroutines.launch
 
-class GameViewModel(private val repository: PokemonRepository) : ViewModel() {
+class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
 
 
     private val _pokemonList = MutableLiveData<PokemonsApiResult>()
@@ -22,7 +23,7 @@ class GameViewModel(private val repository: PokemonRepository) : ViewModel() {
     var round : MutableLiveData<Int> = MutableLiveData<Int>(0)
 
     fun getAllPokemon() = viewModelScope.launch {
-        _pokemonList.postValue(repository.getAllPokemon())
+        _pokemonList.postValue(gameUseCase.getAllPokemonUseCase())
     }
 
     fun createGame()  {
@@ -57,7 +58,7 @@ class GameViewModel(private val repository: PokemonRepository) : ViewModel() {
 
 
     fun insertRecord(userPoints: UserPoints) = viewModelScope.launch {
-        repository.insertRecord(userPoints)
+        gameUseCase.insertRecordUseCase(userPoints)
     }
 }
 

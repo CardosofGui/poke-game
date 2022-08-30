@@ -11,17 +11,15 @@ class RecordImplementation(private val client : HttpClient) {
 
     suspend fun getAllRecords(): List<UserPoints>? = client.get(path = "api/pokeRecord/all")
     suspend fun insertRecord(userPoints: UserPoints): Result? {
-        return client.post(path = "api/pokeRecord/insert") {
-            body = FormDataContent(Parameters.build {
+        return client.submitForm(
+            path = "api/pokeRecord/insert",
+            formParameters = Parameters.build {
                 append("pokegame_username", userPoints.username)
                 append("pokegame_points", userPoints.points)
                 append("pokegame_team", userPoints.team)
                 append("pokegame_person", userPoints.person)
-            })
-        }
+            }
+        )
     }
 
 }
-/*
-
- */

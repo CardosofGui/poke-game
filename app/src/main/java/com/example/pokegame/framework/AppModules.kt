@@ -7,7 +7,10 @@ import com.example.pokegame.framework.viewmodel.GameViewModel
 import com.example.pokegame.framework.viewmodel.RecordViewModel
 import com.example.pokegame.implementation.PokemonImplementation
 import com.example.pokegame.implementation.RecordImplementation
+import com.example.pokegame.usecase.GameUseCase
 import com.example.pokegame.usecase.GetAllPokemonUseCase
+import com.example.pokegame.usecase.GetAllRecordsUseCase
+import com.example.pokegame.usecase.InsertRecordUseCase
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
@@ -23,7 +26,7 @@ import org.koin.dsl.module
 object AppModules {
 
     fun loadModules() {
-        loadKoinModules(viewModelModule() + postsModule())
+        loadKoinModules(viewModelModule() + repositoryModule() + useCaseModule())
     }
 
     private fun viewModelModule() = module {
@@ -32,18 +35,25 @@ object AppModules {
         single { RecordViewModel(get()) }
     }
 
-    private fun postsModule() = module {
-        single { PokemonRepository(get(), get()) }
+    private fun repositoryModule() = module {
+        single { PokemonRepository(get()) }
 
         single { PokemonImplementation(createService(POKEAPI_BASE)) }
-
-        single { GetAllPokemonUseCase(get()) }
 
         single { RecordRepository(get()) }
 
         single { RecordImplementation(createService(POKEGAME_BASE)) }
     }
 
+    private fun useCaseModule() = module {
+        single { GameUseCase(get(), get()) }
+
+        single { InsertRecordUseCase(get()) }
+
+        single { GetAllPokemonUseCase(get()) }
+
+        single { GetAllRecordsUseCase(get()) }
+    }
 
     private fun createService(
         baseURL : String
@@ -55,7 +65,6 @@ object AppModules {
                     prettyPrint = true
                     isLenient = true
                     ignoreUnknownKeys = true
-                    followRedirects = false
                 })
 
                 // Configurando TimeOUT
@@ -81,11 +90,6 @@ object AppModules {
                 onResponse {response ->
                     Log.d("HTTP Status", "${response.status.value}")
                 }
-            }
-
-            install(DefaultRequest) {
-                // Definindo valores padroes que serao usados em cada request
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
 
             defaultRequest {

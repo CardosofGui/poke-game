@@ -56,6 +56,8 @@ class LeaderboardFragment : Fragment() {
             if(!it.isNullOrEmpty()){
                 leaderboardAdapter.updateList(it)
                 hideLoading()
+            } else {
+                showLoading()
             }
         }
     }
@@ -69,13 +71,6 @@ class LeaderboardFragment : Fragment() {
         super.onResume()
 
         leaderboardViewModel.getAllRecords()
-        showLoading()
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        leaderboardViewModel.resetRecords()
     }
     private fun showLoading() {
         binding.llLoading.visibility = View.VISIBLE
