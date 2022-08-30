@@ -1,13 +1,10 @@
-package com.example.pokegame.framework.viewmodel
+package com.example.pokegame.presentation.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.pokegame.data.PokemonRepository
 import com.example.pokegame.domain.Game
-import com.example.pokegame.domain.PokemonResult
-import com.example.pokegame.domain.PokemonsApiResult
-import com.example.pokegame.domain.UserPoints
-import com.example.pokegame.usecase.GameUseCase
+import com.example.pokegame.data.entities.PokemonsApiResult
+import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.domain.usecase.GameUseCase
 import kotlinx.coroutines.launch
 
 class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {

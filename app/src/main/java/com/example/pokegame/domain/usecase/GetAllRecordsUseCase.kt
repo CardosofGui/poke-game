@@ -1,6 +1,6 @@
-package com.example.pokegame.usecase
+package com.example.pokegame.domain.usecase
 
-import com.example.pokegame.data.RecordRepository
+import com.example.pokegame.data.repository.RecordRepository
 
 class GetAllRecordsUseCase(private val recordRepository: RecordRepository) {
 

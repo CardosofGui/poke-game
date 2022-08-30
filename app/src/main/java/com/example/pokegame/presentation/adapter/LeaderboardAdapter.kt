@@ -1,14 +1,11 @@
-package com.example.pokegame.presenter.adapter
+package com.example.pokegame.presentation.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokegame.R
 import com.example.pokegame.databinding.CardRecordBinding
-import com.example.pokegame.domain.UserPoints
+import com.example.pokegame.data.entities.UserPoints
 import com.squareup.picasso.Picasso
 
 class LeaderboardAdapter(

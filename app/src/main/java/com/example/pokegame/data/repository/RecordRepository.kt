@@ -1,7 +1,7 @@
-package com.example.pokegame.data
+package com.example.pokegame.data.repository
 
-import com.example.pokegame.domain.UserPoints
-import com.example.pokegame.implementation.RecordImplementation
+import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.data.implementation.RecordImplementation
 
 class RecordRepository(private val recordImplementation: RecordImplementation) {
 

@@ -1,7 +1,6 @@
-package com.example.pokegame.presenter.fragments
+package com.example.pokegame.presentation.fragments
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -16,8 +15,8 @@ import androidx.fragment.app.Fragment
 import com.example.pokegame.R
 import com.example.pokegame.databinding.FragmentGameBinding
 import com.example.pokegame.domain.Game
-import com.example.pokegame.domain.UserPoints
-import com.example.pokegame.framework.viewmodel.GameViewModel
+import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.presentation.viewmodel.GameViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.shashank.sony.fancytoastlib.FancyToast
 import com.squareup.picasso.Callback

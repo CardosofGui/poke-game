@@ -1,5 +1,6 @@
 package com.example.pokegame.domain
 
+import com.example.pokegame.data.entities.PokemonResult
 import java.util.*
 import kotlin.collections.ArrayList
 

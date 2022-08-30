@@ -1,12 +1,10 @@
-package com.example.pokegame.framework.viewmodel
+package com.example.pokegame.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokegame.data.PokemonRepository
-import com.example.pokegame.data.RecordRepository
-import com.example.pokegame.domain.UserPoints
-import com.example.pokegame.usecase.GetAllRecordsUseCase
+import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.domain.usecase.GetAllRecordsUseCase
 import kotlinx.coroutines.launch
 
 class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : ViewModel() {

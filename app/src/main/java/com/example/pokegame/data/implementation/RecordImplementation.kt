@@ -1,7 +1,7 @@
-package com.example.pokegame.implementation
+package com.example.pokegame.data.implementation
 
-import com.example.pokegame.domain.Result
-import com.example.pokegame.domain.UserPoints
+import com.example.pokegame.data.entities.Result
+import com.example.pokegame.data.entities.UserPoints
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*

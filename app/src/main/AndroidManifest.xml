@@ -16,7 +16,7 @@
         android:theme="@style/Theme.PokeGame"
         tools:targetApi="31">
         <activity
-            android:name=".presenter.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             >
 
             <meta-data
-                android:name="com.example.pokegame.framework.KoinInitializer"
+                android:name="com.example.pokegame.domain.koin.KoinInitializer"
                 android:value="androidx.startup"
                 />
 

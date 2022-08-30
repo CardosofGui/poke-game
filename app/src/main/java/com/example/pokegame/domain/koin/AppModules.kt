@@ -1,16 +1,17 @@
-package com.example.pokegame.framework
+package com.example.pokegame.domain.koin
 
 import android.util.Log
-import com.example.pokegame.data.PokemonRepository
-import com.example.pokegame.data.RecordRepository
-import com.example.pokegame.framework.viewmodel.GameViewModel
-import com.example.pokegame.framework.viewmodel.RecordViewModel
-import com.example.pokegame.implementation.PokemonImplementation
-import com.example.pokegame.implementation.RecordImplementation
-import com.example.pokegame.usecase.GameUseCase
-import com.example.pokegame.usecase.GetAllPokemonUseCase
-import com.example.pokegame.usecase.GetAllRecordsUseCase
-import com.example.pokegame.usecase.InsertRecordUseCase
+import com.example.pokegame.data.repository.PokemonRepository
+import com.example.pokegame.data.repository.RecordRepository
+import com.example.pokegame.presentation.viewmodel.GameViewModel
+import com.example.pokegame.presentation.viewmodel.RecordViewModel
+import com.example.pokegame.data.implementation.PokemonImplementation
+import com.example.pokegame.data.implementation.RecordImplementation
+import com.example.pokegame.domain.usecase.GameUseCase
+import com.example.pokegame.domain.usecase.GetAllPokemonUseCase
+import com.example.pokegame.domain.usecase.GetAllRecordsUseCase
+import com.example.pokegame.domain.usecase.InsertRecordUseCase
+import com.example.pokegame.presentation.adapter.LeaderboardAdapter
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
@@ -19,8 +20,7 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
 import io.ktor.client.request.*
-import io.ktor.http.*
-import org.koin.core.context.loadKoinModules
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -29,33 +29,38 @@ object AppModules {
     fun getModules() : List<Module> = listOf(
         viewModelModule(),
         repositoryModule(),
-        useCaseModule()
+        useCaseModule(),
+        adapterModule()
     )
 
     private fun viewModelModule() = module {
-        single { GameViewModel(get()) }
+        viewModel { GameViewModel(get()) }
 
-        single { RecordViewModel(get()) }
+        viewModel { RecordViewModel(get()) }
     }
 
     private fun repositoryModule() = module {
-        single { PokemonRepository(get()) }
+        factory { PokemonRepository(get()) }
 
         single { PokemonImplementation(createService(POKEAPI_BASE)) }
 
-        single { RecordRepository(get()) }
+        factory { RecordRepository(get()) }
 
         single { RecordImplementation(createService(POKEGAME_BASE)) }
     }
 
     private fun useCaseModule() = module {
-        single { GameUseCase(get(), get()) }
+        factory { GameUseCase(get(), get()) }
 
-        single { InsertRecordUseCase(get()) }
+        factory { InsertRecordUseCase(get()) }
 
-        single { GetAllPokemonUseCase(get()) }
+        factory { GetAllPokemonUseCase(get()) }
 
-        single { GetAllRecordsUseCase(get()) }
+        factory { GetAllRecordsUseCase(get()) }
+    }
+
+    private fun adapterModule() = module {
+        factory { LeaderboardAdapter(arrayListOf()) }
     }
 
     private fun createService(

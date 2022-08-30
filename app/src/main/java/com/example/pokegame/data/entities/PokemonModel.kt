@@ -1,7 +1,5 @@
-package com.example.pokegame.domain
+package com.example.pokegame.data.entities
 
-import androidx.core.content.ContextCompat
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

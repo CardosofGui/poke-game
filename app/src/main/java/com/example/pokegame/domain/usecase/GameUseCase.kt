@@ -1,4 +1,4 @@
-package com.example.pokegame.usecase
+package com.example.pokegame.domain.usecase
 
 data class GameUseCase(
     val getAllPokemonUseCase: GetAllPokemonUseCase,

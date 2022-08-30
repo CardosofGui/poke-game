@@ -1,4 +1,4 @@
-package com.example.pokegame.presenter.fragments
+package com.example.pokegame.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.pokegame.databinding.FragmentLeaderboardBinding
-import com.example.pokegame.framework.viewmodel.RecordViewModel
-import com.example.pokegame.presenter.adapter.LeaderboardAdapter
-import com.example.pokegame.presenter.fragments.GameFragment.Companion.listRecords
+import com.example.pokegame.presentation.viewmodel.RecordViewModel
+import com.example.pokegame.presentation.adapter.LeaderboardAdapter
+import com.example.pokegame.presentation.fragments.GameFragment.Companion.listRecords
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,8 +28,7 @@ class LeaderboardFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding : FragmentLeaderboardBinding
-    private lateinit var leaderboardAdapter: LeaderboardAdapter
-
+    private val leaderboardAdapter : LeaderboardAdapter by inject()
     private val leaderboardViewModel : RecordViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class LeaderboardFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        leaderboardAdapter = LeaderboardAdapter(listRecords)
+        leaderboardAdapter.updateList(listRecords)
         binding.rcvRecords.adapter = leaderboardAdapter
     }
 

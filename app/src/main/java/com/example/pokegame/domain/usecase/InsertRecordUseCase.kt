@@ -1,7 +1,7 @@
-package com.example.pokegame.usecase
+package com.example.pokegame.domain.usecase
 
-import com.example.pokegame.data.RecordRepository
-import com.example.pokegame.domain.UserPoints
+import com.example.pokegame.data.repository.RecordRepository
+import com.example.pokegame.data.entities.UserPoints
 
 class InsertRecordUseCase(private val recordRepository: RecordRepository) {
 

@@ -1,4 +1,4 @@
-package com.example.pokegame.domain
+package com.example.pokegame.data.entities
 
 import kotlinx.serialization.Serializable
 

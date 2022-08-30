@@ -1,6 +1,6 @@
-package com.example.pokegame.implementation
+package com.example.pokegame.data.implementation
 
-import com.example.pokegame.domain.PokemonsApiResult
+import com.example.pokegame.data.entities.PokemonsApiResult
 import io.ktor.client.*
 import io.ktor.client.request.*
 
