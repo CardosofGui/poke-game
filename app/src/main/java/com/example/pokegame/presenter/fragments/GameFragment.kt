@@ -256,7 +256,7 @@ class GameFragment : Fragment() {
         val ibYellow = view.findViewById<ImageButton>(R.id.ib_team_yellow)
         val btnSave = view.findViewById<Button>(R.id.btn_save)
 
-        tvPoints.setText(gamePoints.toString() + " pontos")
+        tvPoints.text = "$gamePoints pontos"
         selectPerson(ibMale, ibFemale)
         selectTeam(ibRed, ibBlue, ibYellow)
         saveRecord(btnSave, edtUser, builder, gamePoints)

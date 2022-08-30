@@ -4,9 +4,8 @@
     package="com.example.pokegame">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
     <application
-        android:name=".BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -28,6 +27,21 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        
+        <provider
+            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            tools:node="merge"
+            >
+
+            <meta-data
+                android:name="com.example.pokegame.framework.KoinInitializer"
+                android:value="androidx.startup"
+                />
+
+        </provider>
+
     </application>
 
 </manifest>
