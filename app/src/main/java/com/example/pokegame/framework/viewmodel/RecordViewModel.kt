@@ -15,7 +15,7 @@ class RecordViewModel(private val recordRepository: RecordRepository) : ViewMode
         get() = _allRecords
 
     fun getAllRecords() = viewModelScope.launch {
-        recordRepository.getAllRecords()
+        _allRecords.postValue(recordRepository.getAllRecords())
     }
 
     fun resetRecords() {

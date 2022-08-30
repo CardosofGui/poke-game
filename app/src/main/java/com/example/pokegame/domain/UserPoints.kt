@@ -1,6 +1,9 @@
 package com.example.pokegame.domain
 
-data class UserPoints(
+import kotlinx.serialization.Serializable
+
+@Serializable
+class UserPoints(
     val id : Int?,
     var username : String,
     var points : String,
@@ -8,6 +11,7 @@ data class UserPoints(
     var person : String
 )
 
-data class Result(
+@Serializable
+class Result(
     val status : String
 )

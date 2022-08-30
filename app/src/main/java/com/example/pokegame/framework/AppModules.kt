@@ -41,7 +41,7 @@ object AppModules {
 
         single { RecordRepository(get()) }
 
-        single { RecordImplementation(createService("")) }
+        single { RecordImplementation(createService(POKEGAME_BASE)) }
     }
 
 
@@ -100,9 +100,7 @@ object AppModules {
 
 
     const val POKEAPI_BASE = "pokeapi.co"
-
-    // TODO 01 - É NECESSARIO CRIAÇÃO DE UMA API PARA ARMAZENAR OS RECORDS DO POKEGAME, VERIFIQUE O SQL BASE NO REPOSITORIO
-    const val POKEGAME_BASE = ""
+    const val POKEGAME_BASE = "pokegame-api-venture.herokuapp.com"
 
     private const val TIME_OUT = 60_000
 }
