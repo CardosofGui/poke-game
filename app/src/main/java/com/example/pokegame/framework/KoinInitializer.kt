@@ -12,7 +12,7 @@ class KoinInitializer : Initializer<KoinApplication> {
         return startKoin {
             androidContext(context)
 
-            AppModules.loadModules()
+            modules(AppModules.getModules())
         }
     }
 

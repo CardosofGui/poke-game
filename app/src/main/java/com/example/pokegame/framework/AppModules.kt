@@ -21,13 +21,16 @@ import io.ktor.client.features.observer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import org.koin.core.context.loadKoinModules
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object AppModules {
 
-    fun loadModules() {
-        loadKoinModules(viewModelModule() + repositoryModule() + useCaseModule())
-    }
+    fun getModules() : List<Module> = listOf(
+        viewModelModule(),
+        repositoryModule(),
+        useCaseModule()
+    )
 
     private fun viewModelModule() = module {
         single { GameViewModel(get()) }
