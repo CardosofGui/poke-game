@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokegame.R
 import com.example.pokegame.databinding.CardRecordBinding
-import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.data.entities.UserPointsModel
 import com.squareup.picasso.Picasso
 
 class LeaderboardAdapter(
-    private var listLeaderboard : List<UserPoints>
+    private var listLeaderboard : List<UserPointsModel>
 ) : RecyclerView.Adapter<ViewHolderLeaderboard>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderLeaderboard {
         return ViewHolderLeaderboard(CardRecordBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -21,7 +21,7 @@ class LeaderboardAdapter(
 
     override fun getItemCount(): Int = listLeaderboard.size
 
-    fun updateList(newList : List<UserPoints>){
+    fun updateList(newList : List<UserPointsModel>){
         listLeaderboard = newList
         notifyDataSetChanged()
     }
@@ -29,7 +29,7 @@ class LeaderboardAdapter(
 }
 
 class ViewHolderLeaderboard(val binding : CardRecordBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(record : UserPoints) {
+    fun bind(record : UserPointsModel) {
         binding.tvName.setText("${position+1} - ${record.username}")
         binding.tvPoints.setText(record.points + " Pontos")
 

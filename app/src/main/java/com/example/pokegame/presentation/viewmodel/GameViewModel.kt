@@ -3,12 +3,17 @@ package com.example.pokegame.presentation.viewmodel
 import androidx.lifecycle.*
 import com.example.pokegame.domain.Game
 import com.example.pokegame.data.entities.PokemonsApiResult
-import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.data.entities.UserPointsModel
+import com.example.pokegame.domain.Results
 import com.example.pokegame.domain.usecase.GameUseCase
 import kotlinx.coroutines.launch
 
 class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
 
+
+    private val _error = MutableLiveData<String?>()
+    val error : MutableLiveData<String?>
+        get() = _error
 
     private val _pokemonList = MutableLiveData<PokemonsApiResult>()
     val pokemonList : MutableLiveData<PokemonsApiResult>
@@ -20,7 +25,14 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     var round : MutableLiveData<Int> = MutableLiveData<Int>(0)
 
     fun getAllPokemon() = viewModelScope.launch {
-        _pokemonList.postValue(gameUseCase.getAllPokemonUseCase())
+        when(val result = gameUseCase.getAllPokemonUseCase.invoke()) {
+            is Results.Sucess -> {
+                _pokemonList.postValue(result.data)
+            }
+            is Results.Error -> {
+                _error.value = result.error.toString()
+            }
+        }
     }
 
     fun createGame()  {
@@ -53,9 +65,13 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     }
     fun getPoints() = pointsList.sum()
 
+    fun insertRecord(userPoints: UserPointsModel) = viewModelScope.launch {
 
-    fun insertRecord(userPoints: UserPoints) = viewModelScope.launch {
-        gameUseCase.insertRecordUseCase(userPoints)
+        when(val result = gameUseCase.insertRecordUseCase(userPoints)) {
+            is Results.Error -> {
+                _error.value = "Error"
+            }
+        }
     }
 }
 

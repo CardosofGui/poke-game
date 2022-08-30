@@ -7,6 +7,26 @@
     tools:context=".presentation.fragments.GameFragment">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/ll_error"
+        >
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alata"
+            android:text="Error"
+            android:textAlignment="center"
+            android:textColor="#F4443B"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_initial"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

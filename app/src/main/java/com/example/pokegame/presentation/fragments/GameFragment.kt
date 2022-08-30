@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.pokegame.R
 import com.example.pokegame.databinding.FragmentGameBinding
 import com.example.pokegame.domain.Game
-import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.data.entities.UserPointsModel
 import com.example.pokegame.presentation.viewmodel.GameViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.shashank.sony.fancytoastlib.FancyToast
@@ -79,6 +79,16 @@ class GameFragment : Fragment() {
         gameViewModel.pokemonList.observe(requireActivity()) {
             if(it != null) {
                 hideLoading()
+            }
+        }
+
+        gameViewModel.error.observe(requireActivity()) {
+            if(it != null) {
+                binding.llInitial.visibility = View.GONE
+                binding.llLoading.visibility = View.GONE
+                binding.llError.visibility = View.VISIBLE
+
+                binding.tvError.text = "$it"
             }
         }
     }
@@ -270,7 +280,7 @@ class GameFragment : Fragment() {
         points: Int
     ) {
         btnSave.setOnClickListener {
-            val newRecord = UserPoints(
+            val newRecord = UserPointsModel(
                 null,
                 username.text.toString(),
                 points.toString(),
@@ -329,7 +339,7 @@ class GameFragment : Fragment() {
 
 
     companion object {
-        val listRecords = arrayListOf<UserPoints>()
+        val listRecords = arrayListOf<UserPointsModel>()
 
         /**
          * Use this factory method to create a new instance of

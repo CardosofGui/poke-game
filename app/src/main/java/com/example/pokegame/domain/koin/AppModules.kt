@@ -1,6 +1,7 @@
 package com.example.pokegame.domain.koin
 
 import android.util.Log
+import com.example.pokegame.data.implementation.GeneralErrorHandlerImplementation
 import com.example.pokegame.data.repository.PokemonRepository
 import com.example.pokegame.data.repository.RecordRepository
 import com.example.pokegame.presentation.viewmodel.GameViewModel
@@ -42,11 +43,13 @@ object AppModules {
     private fun repositoryModule() = module {
         factory { PokemonRepository(get()) }
 
-        single { PokemonImplementation(createService(POKEAPI_BASE)) }
+        single { PokemonImplementation(createService(POKEAPI_BASE), get()) }
 
         factory { RecordRepository(get()) }
 
-        single { RecordImplementation(createService(POKEGAME_BASE)) }
+        single { RecordImplementation(createService(POKEGAME_BASE), get()) }
+
+        single { GeneralErrorHandlerImplementation() }
     }
 
     private fun useCaseModule() = module {
@@ -111,7 +114,7 @@ object AppModules {
     }
 
 
-    const val POKEAPI_BASE = "pokeapi.co"
+    const val POKEAPI_BASE = "pokeapi.codsa"
     const val POKEGAME_BASE = "pokegame-api-venture.herokuapp.com"
 
     private const val TIME_OUT = 60_000

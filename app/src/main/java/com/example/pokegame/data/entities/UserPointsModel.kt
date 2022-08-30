@@ -3,7 +3,7 @@ package com.example.pokegame.data.entities
 import kotlinx.serialization.Serializable
 
 @Serializable
-class UserPoints(
+class UserPointsModel(
     val id : Int?,
     var username : String,
     var points : String,
@@ -12,6 +12,6 @@ class UserPoints(
 )
 
 @Serializable
-class Result(
+class ResultInsert(
     val status : String
 )

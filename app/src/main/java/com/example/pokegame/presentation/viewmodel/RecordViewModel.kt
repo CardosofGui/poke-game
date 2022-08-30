@@ -3,20 +3,32 @@ package com.example.pokegame.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokegame.data.entities.UserPoints
+import com.example.pokegame.data.entities.UserPointsModel
+import com.example.pokegame.domain.Results
 import com.example.pokegame.domain.usecase.GetAllRecordsUseCase
 import kotlinx.coroutines.launch
 
 class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : ViewModel() {
 
-    private val _allRecords = MutableLiveData<List<UserPoints>>()
-    val allRecords : MutableLiveData<List<UserPoints>>
+    private val _allRecords = MutableLiveData<List<UserPointsModel>>()
+    val allRecords : MutableLiveData<List<UserPointsModel>>
         get() = _allRecords
+
+    private val _error = MutableLiveData<String?>()
+    val error : MutableLiveData<String?>
+        get() = _error
 
     init {
         getAllRecords()
     }
     fun getAllRecords() = viewModelScope.launch {
-        _allRecords.postValue(getAllRecordsUseCase())
+        when(val result = getAllRecordsUseCase.invoke()) {
+            is Results.Sucess -> {
+                _allRecords.postValue(result.data)
+            }
+            is Results.Error -> {
+                _error.value = "Error"
+            }
+        }
     }
 }
