@@ -3,8 +3,9 @@ package com.example.pokegame.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokegame.data.entities.ErrorEntitity
 import com.example.pokegame.data.entities.UserPointsModel
-import com.example.pokegame.domain.Results
+import com.example.pokegame.domain.errorhandler.Results
 import com.example.pokegame.domain.usecase.GetAllRecordsUseCase
 import kotlinx.coroutines.launch
 
@@ -27,7 +28,11 @@ class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : 
                 _allRecords.postValue(result.data)
             }
             is Results.Error -> {
-                _error.value = "Error"
+                when(result.error)  {
+                    is ErrorEntitity.Network -> _error.value = "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> _error.value = "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> _error.value = "Falha ao Receber Dados"
+                }
             }
         }
     }

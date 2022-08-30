@@ -2,7 +2,7 @@ package com.example.pokegame.data.implementation
 
 import com.example.pokegame.data.entities.ResultInsert
 import com.example.pokegame.data.entities.UserPointsModel
-import com.example.pokegame.domain.Results
+import com.example.pokegame.domain.errorhandler.Results
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*

@@ -1,10 +1,11 @@
 package com.example.pokegame.presentation.viewmodel
 
 import androidx.lifecycle.*
+import com.example.pokegame.data.entities.ErrorEntitity
 import com.example.pokegame.domain.Game
 import com.example.pokegame.data.entities.PokemonsApiResult
 import com.example.pokegame.data.entities.UserPointsModel
-import com.example.pokegame.domain.Results
+import com.example.pokegame.domain.errorhandler.Results
 import com.example.pokegame.domain.usecase.GameUseCase
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,11 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
                 _pokemonList.postValue(result.data)
             }
             is Results.Error -> {
-                _error.value = result.error.toString()
+                when(result.error)  {
+                    is ErrorEntitity.Network -> _error.value = "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> _error.value = "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> _error.value = "Falha ao Receber Dados"
+                }
             }
         }
     }
@@ -69,7 +74,11 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
 
         when(val result = gameUseCase.insertRecordUseCase(userPoints)) {
             is Results.Error -> {
-                _error.value = "Error"
+                when(result.error)  {
+                    is ErrorEntitity.Network -> _error.value = "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> _error.value = "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> _error.value = "Falha ao Inserir Dados"
+                }
             }
         }
     }

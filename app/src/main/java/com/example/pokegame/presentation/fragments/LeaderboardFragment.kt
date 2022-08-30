@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.example.pokegame.databinding.FragmentLeaderboardBinding
 import com.example.pokegame.presentation.viewmodel.RecordViewModel
 import com.example.pokegame.presentation.adapter.LeaderboardAdapter
@@ -60,6 +61,16 @@ class LeaderboardFragment : Fragment() {
                 showLoading()
             }
         }
+
+        leaderboardViewModel.error.observe(requireActivity()) {
+            if(it != null && leaderboardViewModel.allRecords.value.isNullOrEmpty()) {
+                binding.clLeaderboard.visibility = View.GONE
+                binding.llLoading.visibility = View.GONE
+                binding.llError.visibility = View.VISIBLE
+
+                binding.tvError.text = "$it"
+            }
+        }
     }
 
     private fun initRecycler() {
@@ -74,11 +85,13 @@ class LeaderboardFragment : Fragment() {
     }
     private fun showLoading() {
         binding.llLoading.visibility = View.VISIBLE
-        binding.rcvRecords.visibility = View.GONE
+        binding.clLeaderboard.visibility = View.GONE
+        binding.llError.visibility = View.GONE
     }
     private fun hideLoading() {
         binding.llLoading.visibility = View.GONE
-        binding.rcvRecords.visibility = View.VISIBLE
+        binding.llError.visibility = View.GONE
+        binding.clLeaderboard.visibility = View.VISIBLE
     }
 
     companion object {
