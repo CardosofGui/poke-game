@@ -1,5 +1,6 @@
 package com.example.pokegame.presentation.viewmodel
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : ViewModel() {
 
-    private val _allRecords = MutableLiveData<List<UserPointsModel>?>()
-    val allRecords : MutableLiveData<List<UserPointsModel>?>
+    private val _allRecords = mutableStateListOf<UserPointsModel>()
+    val allRecords : List<UserPointsModel>
         get() = _allRecords
 
     private val _error = MutableLiveData<String?>()
@@ -25,7 +26,7 @@ class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : 
     fun getAllRecords() = viewModelScope.launch {
         when(val result = getAllRecordsUseCase.invoke()) {
             is Results.Sucess -> {
-                _allRecords.postValue(result.data)
+                _allRecords.addAll(result.data)
             }
             is Results.Error -> {
                 when(result.error)  {

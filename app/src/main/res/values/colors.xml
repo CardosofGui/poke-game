@@ -13,4 +13,6 @@
     <color name="background_team_instinct">#F3D852</color>
 
     <color name="hide_pokemon_color">#CCCCCC</color>
+    <color name="button_play_color">#FFCA05</color>
+    <color name="button_info_color">#3A59A5</color>
 </resources>

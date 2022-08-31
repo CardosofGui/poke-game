@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pokegame">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,32 +16,39 @@
         android:theme="@style/Theme.PokeGame"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
-            android:exported="true">
+            android:name=".presentation.compose.MainActivityCompose"
+            android:exported="true"
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.PokeGame">
+            <meta-data
+                android:name=".app.lib_name"
+                android:value="" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.fragments.MainActivity"
+            android:exported="true">
+
+        </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        
-        <provider
-            android:authorities="${applicationId}.androidx-startup"
-            android:name="androidx.startup.InitializationProvider"
-            android:exported="false"
-            tools:node="merge"
-            >
 
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
             <meta-data
                 android:name="com.example.pokegame.domain.koin.KoinInitializer"
-                android:value="androidx.startup"
-                />
-
+                android:value="androidx.startup" />
         </provider>
-
     </application>
 
 </manifest>

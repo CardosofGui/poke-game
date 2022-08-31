@@ -1,18 +1,16 @@
 package com.example.pokegame.presentation.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
+import androidx.fragment.app.Fragment
 import com.example.pokegame.databinding.FragmentLeaderboardBinding
-import com.example.pokegame.presentation.viewmodel.RecordViewModel
 import com.example.pokegame.presentation.adapter.LeaderboardAdapter
-import com.example.pokegame.presentation.fragments.GameFragment.Companion.listRecords
+import com.example.pokegame.presentation.viewmodel.RecordViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.java.KoinJavaComponent.inject
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,13 +45,17 @@ class LeaderboardFragment : Fragment() {
     ): View? {
         binding = FragmentLeaderboardBinding.inflate(inflater, container, false)
 
+        /*
         initClicks()
         initRecycler()
         initObserver()
 
+         */
+
         return binding.root
     }
 
+    /*
     private fun initClicks() {
         binding.btnRestart.setOnClickListener {
             loadingRecords()
@@ -102,6 +104,8 @@ class LeaderboardFragment : Fragment() {
         binding.llError.visibility = if(error) View.VISIBLE else View.GONE
 
     }
+
+     */
 
     companion object {
         /**
