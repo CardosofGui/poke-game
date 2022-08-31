@@ -12,6 +12,10 @@ import kotlinx.coroutines.launch
 class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
 
 
+    private val _statusInsert = MutableLiveData<String?>()
+    val statusInsert : MutableLiveData<String?>
+        get() = _statusInsert
+
     private val _error = MutableLiveData<String?>()
     val error : MutableLiveData<String?>
         get() = _error
@@ -71,16 +75,21 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     fun getPoints() = pointsList.sum()
 
     fun insertRecord(userPoints: UserPointsModel) = viewModelScope.launch {
-
         when(val result = gameUseCase.insertRecordUseCase(userPoints)) {
+            is Results.Sucess -> {
+                   _statusInsert.value = "Record salvo com sucesso!"
+            }
             is Results.Error -> {
                 when(result.error)  {
-                    is ErrorEntitity.Network -> _error.value = "Conexão com a Internet Falhou"
-                    is ErrorEntitity.ServiceUnavailable -> _error.value = "Serviço Indisponivel"
-                    is ErrorEntitity.Unknown -> _error.value = "Falha ao Inserir Dados"
+                    is ErrorEntitity.Network -> _statusInsert.value = "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> _statusInsert.value = "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> _statusInsert.value = "Falha ao Inserir Dados"
                 }
             }
         }
+    }
+    fun resetInsertStatus() {
+        _statusInsert.value = null
     }
 }
 

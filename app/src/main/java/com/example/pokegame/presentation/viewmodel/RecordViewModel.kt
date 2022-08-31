@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : ViewModel() {
 
-    private val _allRecords = MutableLiveData<List<UserPointsModel>>()
-    val allRecords : MutableLiveData<List<UserPointsModel>>
+    private val _allRecords = MutableLiveData<List<UserPointsModel>?>()
+    val allRecords : MutableLiveData<List<UserPointsModel>?>
         get() = _allRecords
 
     private val _error = MutableLiveData<String?>()

@@ -12,6 +12,7 @@ import com.example.pokegame.presentation.adapter.LeaderboardAdapter
 import com.example.pokegame.presentation.fragments.GameFragment.Companion.listRecords
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.java.KoinJavaComponent.inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,28 +47,34 @@ class LeaderboardFragment : Fragment() {
     ): View? {
         binding = FragmentLeaderboardBinding.inflate(inflater, container, false)
 
+        initClicks()
         initRecycler()
         initObserver()
 
         return binding.root
     }
 
+    private fun initClicks() {
+        binding.btnRestart.setOnClickListener {
+            loadingRecords()
+        }
+    }
+
     private fun initObserver() {
         leaderboardViewModel.allRecords.observe(requireActivity()) {
-            if(!it.isNullOrEmpty()){
-                leaderboardAdapter.updateList(it)
-                hideLoading()
-            } else {
-                showLoading()
+            if (it != null) {
+                if(it.isNotEmpty()){
+                    leaderboardAdapter.updateList(it)
+                    showHideElements(initial = true)
+                } else {
+                    loadingRecords()
+                }
             }
         }
 
         leaderboardViewModel.error.observe(requireActivity()) {
             if(it != null && leaderboardViewModel.allRecords.value.isNullOrEmpty()) {
-                binding.clLeaderboard.visibility = View.GONE
-                binding.llLoading.visibility = View.GONE
-                binding.llError.visibility = View.VISIBLE
-
+                showHideElements(error = true)
                 binding.tvError.text = "$it"
             }
         }
@@ -81,17 +88,19 @@ class LeaderboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        loadingRecords()
+    }
+
+    private fun loadingRecords() {
         leaderboardViewModel.getAllRecords()
+
+        if (leaderboardViewModel.allRecords.value.isNullOrEmpty()) showHideElements(loading = true)
     }
-    private fun showLoading() {
-        binding.llLoading.visibility = View.VISIBLE
-        binding.clLeaderboard.visibility = View.GONE
-        binding.llError.visibility = View.GONE
-    }
-    private fun hideLoading() {
-        binding.llLoading.visibility = View.GONE
-        binding.llError.visibility = View.GONE
-        binding.clLeaderboard.visibility = View.VISIBLE
+    private fun showHideElements(initial : Boolean = false, loading : Boolean = false, error : Boolean = false) {
+        binding.clLeaderboard.visibility = if(initial) View.VISIBLE else View.GONE
+        binding.llLoading.visibility = if(loading) View.VISIBLE else View.GONE
+        binding.llError.visibility = if(error) View.VISIBLE else View.GONE
+
     }
 
     companion object {

@@ -117,5 +117,5 @@ object AppModules {
     const val POKEAPI_BASE = "pokeapi.co"
     const val POKEGAME_BASE = "pokegame-api-venture.herokuapp.com"
 
-    private const val TIME_OUT = 60_000
+    private const val TIME_OUT = 10_000
 }

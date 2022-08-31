@@ -78,19 +78,24 @@ class GameFragment : Fragment() {
 
         gameViewModel.pokemonList.observe(requireActivity()) {
             if(it != null) {
-                hideLoading()
+                showHideElements(initial = true)
             }
         }
 
         gameViewModel.error.observe(requireActivity()) {
             if(it != null) {
-                binding.llInitial.visibility = View.GONE
-                binding.llLoading.visibility = View.GONE
-                binding.llError.visibility = View.VISIBLE
-
+                showHideElements(error = true)
                 binding.tvError.text = "$it"
             }
         }
+
+        gameViewModel.statusInsert.observe(requireActivity()) {
+            if(it != null) {
+                FancyToast.makeText(requireContext(), it, FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show()
+                gameViewModel.resetInsertStatus()
+            }
+        }
+
     }
     private fun endGame() {
         binding.llInitial.visibility = View.VISIBLE
@@ -118,6 +123,9 @@ class GameFragment : Fragment() {
         }
         binding.btnInfo.setOnClickListener {
             showInfo()
+        }
+        binding.btnRestart.setOnClickListener {
+            loadingPokemon()
         }
     }
     private fun startGame() {
@@ -226,16 +234,14 @@ class GameFragment : Fragment() {
             }
         }
     }
-    private fun hideLoading() {
-        binding.llLoading.visibility = View.GONE
-        binding.clGame.visibility = View.GONE
-        binding.llInitial.visibility = View.VISIBLE
+
+    private fun showHideElements(initial : Boolean = false, loading : Boolean = false, game : Boolean = false, error : Boolean = false) {
+        binding.llInitial.visibility = if(initial) View.VISIBLE else View.GONE
+        binding.clGame.visibility = if(game) View.VISIBLE else View.GONE
+        binding.llLoading.visibility = if(loading) View.VISIBLE else View.GONE
+        binding.llError.visibility = if(error) View.VISIBLE else View.GONE
     }
-    private fun showLoading() {
-        binding.llLoading.visibility = View.VISIBLE
-        binding.clGame.visibility = View.GONE
-        binding.llInitial.visibility = View.GONE
-    }
+
     private fun showInfo() {
         val builder = AlertDialog.Builder(requireContext()).create()
         builder.setTitle("")
@@ -316,9 +322,13 @@ class GameFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
+    private fun loadingPokemon() {
         gameViewModel.getAllPokemon()
-        showLoading()
+        showHideElements(loading = true)
+    }
+
+    override fun onResume() {
+        loadingPokemon()
 
         super.onResume()
     }
