@@ -1,5 +1,9 @@
 package com.example.pokegame.presentation.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
 import com.example.pokegame.data.entities.ErrorEntitity
 import com.example.pokegame.domain.Game
@@ -10,7 +14,6 @@ import com.example.pokegame.domain.usecase.GameUseCase
 import kotlinx.coroutines.launch
 
 class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
-
 
     private val _statusInsert = MutableLiveData<String?>()
     val statusInsert : MutableLiveData<String?>
@@ -24,10 +27,12 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     val pokemonList : MutableLiveData<PokemonsApiResult>
         get() = _pokemonList
 
-    private var listGames = arrayListOf<Game>()
+    private var listGames = mutableListOf<Game>()
     private var pointsList = arrayListOf<Int>()
 
-    var round : MutableLiveData<Int> = MutableLiveData<Int>(0)
+    var round = mutableStateOf<Int>(0)
+
+    var game : Game? by mutableStateOf(null)
 
     fun getAllPokemon() = viewModelScope.launch {
         when(val result = gameUseCase.getAllPokemonUseCase.invoke()) {
@@ -47,10 +52,10 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     fun createGame()  {
         val pokemonDataListFiltered = pokemonList.value?.results?.shuffled()?.take(4)
 
-        listGames.add(Game(
+        game = Game(
             arrayListOf(pokemonDataListFiltered!![0], pokemonDataListFiltered[1], pokemonDataListFiltered[2], pokemonDataListFiltered[3]),
             pokemonDataListFiltered!!.shuffled()[1]
-        ))
+        )
     }
     fun getActualGame() = listGames[round.value!!]
 

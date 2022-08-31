@@ -14,4 +14,5 @@ object CustomColors {
     val teamRedColor = Color(0xFFEF564E)
     val teamBlueColor = Color(0xFF5489F1)
     val teamYellowColor = Color(0xFFF3D852)
+    val hidePokemonColor = Color(0xFFCCCCCC)
 }

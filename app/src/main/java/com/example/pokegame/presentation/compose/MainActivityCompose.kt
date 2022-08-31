@@ -15,7 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pokegame.presentation.InitialScreen
 import com.example.pokegame.presentation.NavigationItem
-import com.example.pokegame.presentation.RecordsScreen
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.PokeGameTheme
 import com.example.pokegame.presentation.viewmodel.GameViewModel
@@ -43,6 +42,7 @@ class MainActivityCompose : ComponentActivity() {
 
     @Composable
     fun MainScreen() {
+        gameViewModel.getAllPokemon()
         val navController = rememberNavController()
 
         Scaffold(
@@ -51,7 +51,7 @@ class MainActivityCompose : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "initial", modifier = Modifier.padding(it)) {
                     composable("initial") { InitialScreen(navController) }
                     composable("records") { RecordsScreen(recordsViewModel) }
-                    composable("game") { GameScreen() }
+                    composable("game") { GameScreen(gameViewModel) }
                 }
             },
             contentColor = Color.White,

@@ -60,13 +60,17 @@ class GameFragment : Fragment() {
     ): View? {
         binding = FragmentGameBinding.inflate(inflater, container, false)
 
+        /*
         createTimer()
         initClicks()
         initObserver()
 
+         */
+
         return binding.root
     }
 
+    /*
     private fun initObserver() {
         gameViewModel.round.observe(requireActivity()) {
             if (it == -1) {
@@ -346,6 +350,8 @@ class GameFragment : Fragment() {
         val handler = Handler()
         handler.postDelayed({ toast.cancel() }, 500)
     }
+
+     */
 
 
     companion object {

@@ -1,4 +1,4 @@
-package com.example.pokegame.presentation
+package com.example.pokegame.presentation.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
