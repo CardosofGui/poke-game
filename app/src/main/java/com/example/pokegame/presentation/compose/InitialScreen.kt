@@ -87,7 +87,9 @@ fun InitialScreen(navController: NavController?) {
             }
 
             Button(
-                onClick = { navController!!.navigate("game") },
+                onClick = {
+                    navController?.navigate("game")
+                },
                 Modifier
                     .weight(1f)
                     .padding(end = 12.dp),
@@ -110,9 +112,7 @@ fun CardDialog() {
     val context = LocalContext.current
 
     val imageLoader = ImageLoader.Builder(context)
-        .components(fun ComponentRegistry.Builder.() {
-
-        }).build()
+        .components(fun ComponentRegistry.Builder.() {}).build()
 
     Card(
         shape = RoundedCornerShape(8.dp),

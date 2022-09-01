@@ -32,7 +32,7 @@ fun GameScreen(gameViewModel: GameViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white))
+            .background(Color.White)
     ) {
         Image(
             painter = painterResource(id = R.drawable.who_is_icon),
@@ -41,7 +41,6 @@ fun GameScreen(gameViewModel: GameViewModel) {
         )
 
         if (gameViewModel.game != null) {
-
             Image(
                 painter = rememberAsyncImagePainter(gameViewModel.game!!.correctPoke.getImage()),
                 contentDescription = "Correct Pokémon Image",
