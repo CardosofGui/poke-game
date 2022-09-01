@@ -23,9 +23,11 @@ class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : 
     init {
         getAllRecords()
     }
+
     fun getAllRecords() = viewModelScope.launch {
         when(val result = getAllRecordsUseCase.invoke()) {
             is Results.Sucess -> {
+                _allRecords.clear()
                 _allRecords.addAll(result.data)
             }
             is Results.Error -> {

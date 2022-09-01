@@ -13,7 +13,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pokegame.presentation.InitialScreen
 import com.example.pokegame.presentation.NavigationItem
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.PokeGameTheme

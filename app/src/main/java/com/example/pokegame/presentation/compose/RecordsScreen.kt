@@ -42,10 +42,14 @@ fun RecordsScreen(recordViewModel: RecordViewModel) {
                 .fillMaxWidth()
         )
 
-        LazyColumn() {
-            items(recordsList.value) {
-                RecordCard(userPointsModel = it)
+        if(recordsList.value.isNotEmpty()) {
+            LazyColumn() {
+                items(recordsList.value) {
+                    RecordCard(userPointsModel = it)
+                }
             }
+        } else {
+            /* Criar um Loading */
         }
     }
 }
