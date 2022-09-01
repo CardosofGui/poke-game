@@ -12,7 +12,6 @@ import com.example.pokegame.domain.usecase.GameUseCase
 import com.example.pokegame.domain.usecase.GetAllPokemonUseCase
 import com.example.pokegame.domain.usecase.GetAllRecordsUseCase
 import com.example.pokegame.domain.usecase.InsertRecordUseCase
-import com.example.pokegame.presentation.adapter.LeaderboardAdapter
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
@@ -31,7 +30,6 @@ object AppModules {
         viewModelModule(),
         repositoryModule(),
         useCaseModule(),
-        adapterModule()
     )
 
     private fun viewModelModule() = module {
@@ -60,10 +58,6 @@ object AppModules {
         factory { GetAllPokemonUseCase(get()) }
 
         factory { GetAllRecordsUseCase(get()) }
-    }
-
-    private fun adapterModule() = module {
-        factory { LeaderboardAdapter(arrayListOf()) }
     }
 
     private fun createService(

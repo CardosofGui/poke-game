@@ -1,9 +1,9 @@
 package com.example.pokegame.presentation.compose
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,11 +17,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.example.pokegame.R
 import com.example.pokegame.data.entities.UserPointsModel
@@ -36,9 +36,10 @@ import kotlin.time.Duration.Companion.seconds
 fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     val game = gameViewModel.game
 
-    var timerCount by remember { mutableStateOf(5) }
-    var ticks by remember { mutableStateOf(0) }
-    var timerStatus by remember { mutableStateOf(true) }
+    var gameTimerCount by remember { mutableStateOf(5) }
+    var ticks by remember { mutableStateOf(1000) }
+    var timerGameStatus by remember { mutableStateOf(true) }
+    var hidePokemonColor by remember { mutableStateOf<Color?>(CustomColors.hidePokemonColor) }
 
     var openDialog by remember { mutableStateOf(false) }
 
@@ -46,21 +47,53 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     var personSelect by remember { mutableStateOf("M") }
     var teamSelect by remember { mutableStateOf("R") }
 
+    var timerWinGame by remember { mutableStateOf(false) }
+    var timerLossGame by remember { mutableStateOf(false) }
+
+
     LaunchedEffect(Unit) {
-        while (timerStatus) {
+        while (timerGameStatus) {
             delay(1.milliseconds)
 
-            if (ticks == 1000) {
-                timerCount--
-                ticks = 0
-            } else ticks++
+            if (ticks == 0) {
+                gameTimerCount--
+                ticks = 1000
+            } else ticks--
         }
     }
 
-    if (timerCount == 0) {
-        timerStatus = false
+    if(timerWinGame) {
+        LaunchedEffect(Unit) {
+            gameTimerCount = 5 // Resetando o valor do Timer do Jogo
+            hidePokemonColor = null
+
+            delay(500.milliseconds) // Delay 1 Seg. antes de trocar de jogo
+
+            hidePokemonColor = CustomColors.hidePokemonColor
+            gameViewModel.winGame(ticks)
+            ticks = 0
+            timerWinGame = false
+        }
+    }
+
+    if(timerLossGame) {
+        LaunchedEffect(Unit) {
+            gameTimerCount = 5 // Resetando o valor do Timer do Jogo
+            timerGameStatus = false
+            hidePokemonColor = null
+            ticks = 0
+
+            delay(2.seconds) // Delay 2 Seg. antes de trocar de jogo
+
+            timerLossGame = false
+            openDialog =  true
+        }
+    }
+
+    if (gameTimerCount == 0) {
+        timerGameStatus = false
         openDialog = true
-        timerCount = 5
+        gameTimerCount = 5
     }
 
     if (openDialog) {
@@ -241,25 +274,23 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
         )
         if (game != null) {
             Image(
-                painter = rememberAsyncImagePainter(game.correctPoke.getImage()),
-                contentDescription = "Correct Pokémon Image",
+                painter = rememberAsyncImagePainter(
+                    game.correctPoke.getImage()
+                ),
+                contentDescription = "Imagem Pokemon Correto",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp),
-                colorFilter = ColorFilter.tint(CustomColors.hidePokemonColor))
+                colorFilter = hidePokemonColor?.let { ColorFilter.tint(it) })
 
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(game.pokemonList) { poke ->
                     Button(
                         onClick = {
                             if (game.checkResult(poke.name)) {
-                                gameViewModel.winGame(ticks)
-                                timerCount = 5
-                                ticks = 0
+                                timerWinGame =  true
                             } else {
-                                timerCount = 5
-                                timerStatus = false
-                                openDialog = true
+                                timerLossGame = true
                             }
                         },
                         modifier = Modifier
@@ -280,7 +311,7 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
             }
 
             Text(
-                text = "$timerCount Segundos",
+                text = "$gameTimerCount Segundos",
                 color = CustomColors.timerColor,
                 fontFamily = CustomFonts.PokeFont,
                 fontSize = 32.sp,
