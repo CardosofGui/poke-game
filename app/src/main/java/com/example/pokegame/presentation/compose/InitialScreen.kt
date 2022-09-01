@@ -1,5 +1,6 @@
 package com.example.pokegame.presentation.compose
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,9 +31,13 @@ import coil.compose.rememberImagePainter
 import com.example.pokegame.R
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.CustomFonts
+import com.example.pokegame.presentation.viewmodel.GameViewModel
 
 @Composable
-fun InitialScreen(navController: NavController?) {
+fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
+    gameViewModel.getAllPokemon()
+
+    val context = LocalContext.current
     val openDialog = remember { mutableStateOf(false) }
 
     Column(
@@ -63,7 +68,7 @@ fun InitialScreen(navController: NavController?) {
             modifier = Modifier.align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
             fontSize = 14.sp,
-            fontFamily = CustomFonts.alata
+            fontFamily = CustomFonts.Alata
         )
 
         Row(
@@ -88,7 +93,9 @@ fun InitialScreen(navController: NavController?) {
 
             Button(
                 onClick = {
-                    navController?.navigate("game")
+                    if(gameViewModel.pokemonList.value?.results?.isNotEmpty() == true) {
+                        navController?.navigate("game")
+                    }
                 },
                 Modifier
                     .weight(1f)
@@ -132,13 +139,13 @@ fun CardDialog() {
             Text(
                 text = "PokeGame é um jogo simples para por em prática os seus conhecimentos do mundo Pokémon através da brincadeira mais conhecida desse mundo, a \"Quem é esse Pokémon?\". \n\nNesse Quiz você terá 1 Foto de um Pokémon em preto e branco e 4 opções, e através dos traços da foto você deve adivinhar qual é o Pokémon.\n\nVocê terá 5 segundos para adivinhar e quão mais rapído e mais longe chegar acertando os Pokémons mais pontos acumulará o que ao final da partida poderá salvar seu Record em nosso banco de dados!",
                 fontWeight = FontWeight.Bold,
-                fontFamily = CustomFonts.alata
+                fontFamily = CustomFonts.Alata
             )
 
             Text(
                 text = "• Demonstração",
                 fontWeight = FontWeight.Bold,
-                fontFamily = CustomFonts.alata,
+                fontFamily = CustomFonts.Alata,
                 fontSize = 22.sp,
                 modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
             )
@@ -158,12 +165,4 @@ fun CardDialog() {
 @Composable
 fun CardDialogPreview() {
     CardDialog()
-}
-
-@Preview
-@Composable
-private fun initialScreenPreview() {
-    val navController = rememberNavController()
-
-    InitialScreen(navController)
 }

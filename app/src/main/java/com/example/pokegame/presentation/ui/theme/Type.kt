@@ -30,7 +30,11 @@ val Typography = Typography(
 )
 
 object CustomFonts {
-    val alata = FontFamily(
+    val Alata = FontFamily(
         Font(R.font.alata_regular)
+    )
+
+    val PokeFont = FontFamily(
+        Font(R.font.pokemon_solid)
     )
 }

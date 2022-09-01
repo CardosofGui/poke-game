@@ -11,8 +11,6 @@ class Game(
 ) {
 
     fun checkResult(result: String): Boolean {
-        Log.e("Pokemon Checker", "Alternativa Correta")
-
         return result.lowercase(Locale.ROOT) == correctPoke.name.lowercase(Locale.ROOT)
     }
 

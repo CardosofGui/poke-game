@@ -1,5 +1,6 @@
 package com.example.pokegame.data.entities
 
+import androidx.compose.runtime.MutableState
 import kotlinx.serialization.Serializable
 
 @Serializable

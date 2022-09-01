@@ -41,48 +41,47 @@ class MainActivityCompose : ComponentActivity() {
 
     @Composable
     fun MainScreen() {
-        gameViewModel.getAllPokemon()
         val navController = rememberNavController()
 
         Scaffold(
             bottomBar = { BottomNavigationBar(navController) },
             content = {
                 NavHost(navController = navController, startDestination = "initial", modifier = Modifier.padding(it)) {
-                    composable("initial") { InitialScreen(navController) }
+                    composable("initial") { InitialScreen(navController, gameViewModel) }
                     composable("records") { RecordsScreen(recordsViewModel) }
-                    composable("game") { GameScreen(gameViewModel) }
+                    composable("game") { GameScreen(gameViewModel, navController) }
                 }
             },
             contentColor = Color.White,
         )
     }
-}
 
-@Composable
-fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(
-        NavigationItem.Initial,
-        NavigationItem.Records
-    )
+    @Composable
+    fun BottomNavigationBar(navController: NavHostController) {
+        val items = listOf(
+            NavigationItem.Initial,
+            NavigationItem.Records
+        )
 
-    BottomNavigation(
-        backgroundColor = CustomColors.bottomNavigationColor,
-        contentColor = Color.Black
-    ) {
-      items.forEach {item ->
-          BottomNavigationItem(
-              selected = false,
-              icon = { Icon(painter = painterResource(id = item.icon), contentDescription = item.title) },
-              selectedContentColor = Color.White,
-              unselectedContentColor = Color.Black,
-              alwaysShowLabel = true,
-              label = { Text(
-                  text = item.title
-              ) },
-              onClick = {
-                  navController.navigate(item.route)
-              }
-          )
-      }
+        BottomNavigation(
+            backgroundColor = CustomColors.bottomNavigationColor,
+            contentColor = Color.Black
+        ) {
+            items.forEach {item ->
+                BottomNavigationItem(
+                    selected = false,
+                    icon = { Icon(painter = painterResource(id = item.icon), contentDescription = item.title) },
+                    selectedContentColor = Color.White,
+                    unselectedContentColor = Color.Black,
+                    alwaysShowLabel = true,
+                    label = { Text(
+                        text = item.title
+                    ) },
+                    onClick = {
+                        navController.navigate(item.route)
+                    }
+                )
+            }
+        }
     }
 }

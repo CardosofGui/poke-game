@@ -60,14 +60,8 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     fun getActualGame() = listGames[round.value!!]
 
     fun winGame(timer: Int){
-        pointsList.add(timer/100 + (timer/100 * round.value!!/50))
+        pointsList.add(timer)
         createGame()
-
-        if (round.value!!+1 < listGames.size) round.value = round.value?.plus(1)
-        else {
-            round.value = -1
-            resetGame()
-        }
     }
     fun lossGame(){
         round.value = -1
