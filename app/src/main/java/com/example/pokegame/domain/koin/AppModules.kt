@@ -87,7 +87,7 @@ object AppModules {
                     }
                 }
 
-                level = LogLevel.ALL
+                level = LogLevel.NONE
             }
 
             install(ResponseObserver) {

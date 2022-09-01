@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -28,12 +29,14 @@ import com.example.pokegame.data.entities.UserPointsModel
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.CustomFonts
 import com.example.pokegame.presentation.viewmodel.GameViewModel
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
+
     val game = gameViewModel.game
 
     var gameTimerCount by remember { mutableStateOf(5) }
@@ -49,6 +52,7 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
 
     var timerWinGame by remember { mutableStateOf(false) }
     var timerLossGame by remember { mutableStateOf(false) }
+
 
 
     LaunchedEffect(Unit) {

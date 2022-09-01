@@ -1,6 +1,9 @@
 package com.example.pokegame.presentation.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +19,7 @@ class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : 
     val allRecords : List<UserPointsModel>
         get() = _allRecords
 
-    private val _error = MutableLiveData<String?>()
-    val error : MutableLiveData<String?>
-        get() = _error
+    var errorStatus by mutableStateOf("")
 
     init {
         getAllRecords()
@@ -31,10 +32,10 @@ class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : 
                 _allRecords.addAll(result.data)
             }
             is Results.Error -> {
-                when(result.error)  {
-                    is ErrorEntitity.Network -> _error.value = "Conexão com a Internet Falhou"
-                    is ErrorEntitity.ServiceUnavailable -> _error.value = "Serviço Indisponivel"
-                    is ErrorEntitity.Unknown -> _error.value = "Falha ao Receber Dados"
+                errorStatus = when(result.error)  {
+                    is ErrorEntitity.Network -> "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> "Falha ao Receber Dados"
                 }
             }
         }

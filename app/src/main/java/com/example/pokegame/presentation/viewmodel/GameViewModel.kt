@@ -1,11 +1,9 @@
 package com.example.pokegame.presentation.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.*
 import com.example.pokegame.data.entities.ErrorEntitity
+import com.example.pokegame.data.entities.PokemonResult
 import com.example.pokegame.domain.Game
 import com.example.pokegame.data.entities.PokemonsApiResult
 import com.example.pokegame.data.entities.UserPointsModel
@@ -15,80 +13,70 @@ import kotlinx.coroutines.launch
 
 class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
 
-    private val _statusInsert = MutableLiveData<String?>()
-    val statusInsert : MutableLiveData<String?>
-        get() = _statusInsert
-
-    private val _error = MutableLiveData<String?>()
-    val error : MutableLiveData<String?>
-        get() = _error
-
-    private val _pokemonList = MutableLiveData<PokemonsApiResult>()
-    val pokemonList : MutableLiveData<PokemonsApiResult>
-        get() = _pokemonList
 
     private var listGames = mutableListOf<Game>()
     private var pointsList = arrayListOf<Int>()
 
-    var round = mutableStateOf<Int>(0)
-
     var game : Game? by mutableStateOf(null)
+    var statusInsert by mutableStateOf("")
+    var errorStatus by mutableStateOf("")
+
+
+    var _pokemonList = mutableStateListOf<PokemonResult>()
+    val pokemonList : List<PokemonResult>
+        get() = _pokemonList
 
     fun getAllPokemon() = viewModelScope.launch {
         when(val result = gameUseCase.getAllPokemonUseCase.invoke()) {
             is Results.Sucess -> {
-                _pokemonList.postValue(result.data)
+                _pokemonList.clear()
+                _pokemonList.addAll(result.data.results)
             }
             is Results.Error -> {
-                when(result.error)  {
-                    is ErrorEntitity.Network -> _error.value = "Conexão com a Internet Falhou"
-                    is ErrorEntitity.ServiceUnavailable -> _error.value = "Serviço Indisponivel"
-                    is ErrorEntitity.Unknown -> _error.value = "Falha ao Receber Dados"
+                errorStatus = when(result.error)  {
+                    is ErrorEntitity.Network -> "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> "Falha ao Receber Dados"
                 }
             }
         }
     }
 
     fun createGame()  {
-        val pokemonDataListFiltered = pokemonList.value?.results?.shuffled()?.take(4)
+        val pokemonDataListFiltered = pokemonList.shuffled()?.take(4)
 
         game = Game(
             arrayListOf(pokemonDataListFiltered!![0], pokemonDataListFiltered[1], pokemonDataListFiltered[2], pokemonDataListFiltered[3]),
             pokemonDataListFiltered!!.shuffled()[1]
         )
     }
-    fun getActualGame() = listGames[round.value!!]
-
     fun winGame(timer: Int){
         pointsList.add(timer)
         createGame()
     }
-    fun lossGame(){
-        round.value = -1
-    }
     fun resetGame() {
-        round.value = 0
         listGames = arrayListOf()
         pointsList = arrayListOf()
     }
     fun getPoints() = pointsList.sum()
 
     fun insertRecord(userPoints: UserPointsModel) = viewModelScope.launch {
-        when(val result = gameUseCase.insertRecordUseCase(userPoints)) {
+        statusInsert = when(val result = gameUseCase.insertRecordUseCase(userPoints)) {
             is Results.Sucess -> {
-                   _statusInsert.value = "Record salvo com sucesso!"
+                "Record salvo com sucesso!"
             }
             is Results.Error -> {
                 when(result.error)  {
-                    is ErrorEntitity.Network -> _statusInsert.value = "Conexão com a Internet Falhou"
-                    is ErrorEntitity.ServiceUnavailable -> _statusInsert.value = "Serviço Indisponivel"
-                    is ErrorEntitity.Unknown -> _statusInsert.value = "Falha ao Inserir Dados"
+                    is ErrorEntitity.Network -> "Conexão com a Internet Falhou"
+                    is ErrorEntitity.ServiceUnavailable -> "Serviço Indisponivel"
+                    is ErrorEntitity.Unknown -> "Falha ao Inserir Dados"
                 }
             }
         }
     }
+
     fun resetInsertStatus() {
-        _statusInsert.value = null
+        statusInsert = ""
     }
 }
 

@@ -32,85 +32,102 @@ import com.example.pokegame.R
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.CustomFonts
 import com.example.pokegame.presentation.viewmodel.GameViewModel
+import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
 fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
     gameViewModel.getAllPokemon()
 
+    val errorStatus = gameViewModel.errorStatus
+    val statusInsert = gameViewModel.statusInsert
     val context = LocalContext.current
     val openDialog = remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.white))
-            .wrapContentSize(Alignment.Center)
-            .padding(16.dp)
-    ) {
-        if(openDialog.value) {
-            Dialog(onDismissRequest = { openDialog.value = false }) {
-                CardDialog()
-            }
-        }
-        
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "APP Logo",
-            Modifier
-                .fillMaxWidth()
-                .height(126.dp)
-        )
+    if(statusInsert.isNotEmpty()) {
+        FancyToast.makeText(context, statusInsert, FancyToast.INFO, FancyToast.LENGTH_SHORT, false).show()
+        gameViewModel.resetInsertStatus()
+    }
 
-        Text(
-            text = "Seja bem vindo(a) treinad(a) Pokémon! Está pronto para por em prática seus conhecimentos do fantástico mundo Pokémon?",
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 14.sp,
-            fontFamily = CustomFonts.Alata
-        )
-
-        Row(
+    if(gameViewModel.pokemonList.isNotEmpty()) {
+        Column(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                .fillMaxSize()
+                .background(colorResource(id = R.color.white))
+                .wrapContentSize(Alignment.Center)
+                .padding(16.dp)
         ) {
-            Button(
-                onClick = { openDialog.value = true },
-                Modifier
-                    .weight(1f)
-                    .padding(end = 12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = CustomColors.infoColor,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = "COMO JOGAR?",
-                    fontWeight = FontWeight.Bold
-                )
+            if(openDialog.value) {
+                Dialog(onDismissRequest = { openDialog.value = false }) {
+                    CardDialog()
+                }
             }
 
-            Button(
-                onClick = {
-                    if(gameViewModel.pokemonList.value?.results?.isNotEmpty() == true) {
-                        navController?.navigate("game")
-                    }
-                },
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "APP Logo",
                 Modifier
-                    .weight(1f)
-                    .padding(end = 12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = CustomColors.playColor,
-                    contentColor = Color.Black
-                )
+                    .fillMaxWidth()
+                    .height(126.dp)
+            )
+
+            Text(
+                text = "Seja bem vindo(a) treinad(a) Pokémon! Está pronto para por em prática seus conhecimentos do fantástico mundo Pokémon?",
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                textAlign = TextAlign.Center,
+                fontSize = 14.sp,
+                fontFamily = CustomFonts.Alata
+            )
+
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
             ) {
-                Text(
-                    text = "JOGAR",
-                    fontWeight = FontWeight.Bold
-                )
+                Button(
+                    onClick = { openDialog.value = true },
+                    Modifier
+                        .weight(1f)
+                        .padding(end = 12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = CustomColors.infoColor,
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = "COMO JOGAR?",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Button(
+                    onClick = {
+                        if(gameViewModel.pokemonList.isNotEmpty()) {
+                            navController?.navigate("game")
+                        }
+                    },
+                    Modifier
+                        .weight(1f)
+                        .padding(end = 12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = CustomColors.playColor,
+                        contentColor = Color.Black
+                    )
+                ) {
+                    Text(
+                        text = "JOGAR",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
+    } else if(errorStatus.isNotEmpty()) {
+        ErrorStatus(error = errorStatus) {
+            Toast.makeText(context, errorStatus, Toast.LENGTH_SHORT).show()
+            gameViewModel.errorStatus = ""
+        }
+    } else {
+        LoadingPokemon()
     }
 }
 
@@ -118,8 +135,7 @@ fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
 fun CardDialog() {
     val context = LocalContext.current
 
-    val imageLoader = ImageLoader.Builder(context)
-        .components(fun ComponentRegistry.Builder.() {}).build()
+    val imageLoader = ImageLoader.Builder(context).components(fun ComponentRegistry.Builder.() {}).build()
 
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -166,3 +182,29 @@ fun CardDialog() {
 fun CardDialogPreview() {
     CardDialog()
 }
+
+@Composable
+fun LoadingPokemon() {
+    Column(
+        Modifier
+            .background(Color.White)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Column() {
+            Image(
+                painter = painterResource(id = R.drawable.loading_text),
+                contentDescription = "Carregando Records",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+            )
+        }
+    }
+}
+@Composable
+@Preview
+fun LoadingPokemonPreview() {
+    LoadingPokemon()
+}
+
