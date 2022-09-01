@@ -2,6 +2,10 @@ package com.example.pokegame.presentation.compose
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -235,7 +239,6 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
                 .height(120.dp)
                 .fillMaxWidth()
         )
-
         if (game != null) {
             Image(
                 painter = rememberAsyncImagePainter(game.correctPoke.getImage()),
@@ -245,49 +248,8 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
                     .height(160.dp),
                 colorFilter = ColorFilter.tint(CustomColors.hidePokemonColor))
 
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                for (poke in game.pokemonList.take(2)) {
-                    Button(
-                        onClick = {
-                            if (game.checkResult(poke.name)) {
-                                gameViewModel.winGame(ticks)
-                                timerCount = 5
-                                ticks = 0
-                            } else {
-                                timerCount = 5
-                                timerStatus = false
-                                openDialog = true
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(6.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = CustomColors.playColor,
-                            contentColor = Color.Black
-                        )
-                    ) {
-                        Text(
-                            text = poke.name.capitalize(),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                for (poke in game.pokemonList.takeLast(2)) {
+            LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                items(game.pokemonList) { poke ->
                     Button(
                         onClick = {
                             if (game.checkResult(poke.name)) {
