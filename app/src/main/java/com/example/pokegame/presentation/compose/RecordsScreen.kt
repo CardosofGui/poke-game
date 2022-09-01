@@ -38,8 +38,6 @@ import okhttp3.internal.wait
 
 @Composable
 fun RecordsScreen(recordViewModel: RecordViewModel) {
-    recordViewModel.getAllRecords()
-
     val context = LocalContext.current
     val recordsList = remember { mutableStateOf(recordViewModel.allRecords) }
     val errorStatus = recordViewModel.errorStatus
@@ -58,7 +56,7 @@ fun RecordsScreen(recordViewModel: RecordViewModel) {
         )
 
         if(recordsList.value.isNotEmpty()) {
-            LazyColumn() {
+            LazyColumn {
                 items(recordsList.value) {
                     RecordCard(userPointsModel = it)
                 }
@@ -117,7 +115,7 @@ fun LoadingRecords() {
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        Column() {
+        Column {
             Image(
                 painter = painterResource(id = R.drawable.loading_text_records),
                 contentDescription = "Carregando Records",

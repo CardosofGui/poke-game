@@ -36,8 +36,6 @@ import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
 fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
-    gameViewModel.getAllPokemon()
-
     val errorStatus = gameViewModel.errorStatus
     val statusInsert = gameViewModel.statusInsert
     val context = LocalContext.current
@@ -127,6 +125,7 @@ fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
             gameViewModel.errorStatus = ""
         }
     } else {
+        gameViewModel.getAllPokemon()
         LoadingPokemon()
     }
 }

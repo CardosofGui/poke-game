@@ -48,7 +48,10 @@ class MainActivityCompose : ComponentActivity() {
             content = {
                 NavHost(navController = navController, startDestination = "initial", modifier = Modifier.padding(it)) {
                     composable("initial") { InitialScreen(navController, gameViewModel) }
-                    composable("records") { RecordsScreen(recordsViewModel) }
+                    composable("records") {
+                        RecordsScreen(recordsViewModel)
+                        recordsViewModel.getAllRecords()
+                    }
                     composable("game") { GameScreen(gameViewModel, navController) }
                 }
             },

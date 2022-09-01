@@ -22,7 +22,7 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     var errorStatus by mutableStateOf("")
 
 
-    var _pokemonList = mutableStateListOf<PokemonResult>()
+    private var _pokemonList = mutableStateListOf<PokemonResult>()
     val pokemonList : List<PokemonResult>
         get() = _pokemonList
 
