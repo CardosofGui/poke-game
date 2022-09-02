@@ -21,10 +21,6 @@ class RecordViewModel(private val getAllRecordsUseCase: GetAllRecordsUseCase) : 
 
     var errorStatus by mutableStateOf("")
 
-    init {
-        getAllRecords()
-    }
-
     fun getAllRecords() = viewModelScope.launch {
         when(val result = getAllRecordsUseCase.invoke()) {
             is Results.Sucess -> {

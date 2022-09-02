@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +31,7 @@ import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.CustomFonts
 import com.example.pokegame.presentation.viewmodel.RecordViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
+import kotlinx.coroutines.launch
 import okhttp3.internal.wait
 
 
@@ -41,6 +40,10 @@ fun RecordsScreen(recordViewModel: RecordViewModel) {
     val context = LocalContext.current
     val recordsList = remember { mutableStateOf(recordViewModel.allRecords) }
     val errorStatus = recordViewModel.errorStatus
+
+    LaunchedEffect(Unit) {
+        recordViewModel.getAllRecords()
+    }
 
     Column(
         modifier = Modifier

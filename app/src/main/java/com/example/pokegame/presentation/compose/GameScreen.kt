@@ -53,8 +53,6 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     var timerWinGame by remember { mutableStateOf(false) }
     var timerLossGame by remember { mutableStateOf(false) }
 
-
-
     LaunchedEffect(Unit) {
         while (timerGameStatus) {
             delay(1.milliseconds)

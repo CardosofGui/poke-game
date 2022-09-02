@@ -41,7 +41,6 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
             }
         }
     }
-
     fun createGame()  {
         val pokemonDataListFiltered = pokemonList.shuffled()?.take(4)
 

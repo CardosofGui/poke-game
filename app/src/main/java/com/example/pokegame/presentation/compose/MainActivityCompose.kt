@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -48,10 +50,7 @@ class MainActivityCompose : ComponentActivity() {
             content = {
                 NavHost(navController = navController, startDestination = "initial", modifier = Modifier.padding(it)) {
                     composable("initial") { InitialScreen(navController, gameViewModel) }
-                    composable("records") {
-                        RecordsScreen(recordsViewModel)
-                        recordsViewModel.getAllRecords()
-                    }
+                    composable("records") { RecordsScreen(recordsViewModel) }
                     composable("game") { GameScreen(gameViewModel, navController) }
                 }
             },
