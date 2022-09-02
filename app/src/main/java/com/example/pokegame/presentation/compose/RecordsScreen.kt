@@ -104,11 +104,6 @@ fun RecordCard(userPointsModel: UserPointsModel) {
         }
     }
 }
-@Composable
-@Preview
-fun RecordCardPreview() {
-    RecordCard(userPointsModel = UserPointsModel(null, "Gui", "123", "B", "M"))
-}
 
 @Composable
 fun LoadingRecords() {
@@ -128,11 +123,6 @@ fun LoadingRecords() {
             )
         }
     }
-}
-@Composable
-@Preview
-fun LoadingRecordsPreview() {
-    LoadingRecords()
 }
 
 @Composable
@@ -167,9 +157,4 @@ fun ErrorStatus(error : String, reload : () -> Unit) {
             }
         }
     }
-}
-@Composable
-@Preview
-fun ErrorStatusPreview() {
-    ErrorStatus("Exemplo de Erro") {}
 }

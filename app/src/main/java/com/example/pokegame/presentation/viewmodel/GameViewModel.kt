@@ -57,7 +57,7 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
         listGames = arrayListOf()
         pointsList = arrayListOf()
     }
-    fun getPoints() = pointsList.sum()
+    fun getPoints() = pointsList.sum().toString()
 
     fun insertRecord(userPoints: UserPointsModel) = viewModelScope.launch {
         statusInsert = when(val result = gameUseCase.insertRecordUseCase(userPoints)) {

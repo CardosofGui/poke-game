@@ -176,12 +176,6 @@ fun CardDialog() {
     }
 }
 
-@Preview
-@Composable
-fun CardDialogPreview() {
-    CardDialog()
-}
-
 @Composable
 fun LoadingPokemon() {
     Column(
@@ -201,9 +195,3 @@ fun LoadingPokemon() {
         }
     }
 }
-@Composable
-@Preview
-fun LoadingPokemonPreview() {
-    LoadingPokemon()
-}
-
