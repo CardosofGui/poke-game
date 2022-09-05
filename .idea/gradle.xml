@@ -19,14 +19,7 @@
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/game" />
-            <option value="$PROJECT_DIR$/feature_game" />
-            <option value="$PROJECT_DIR$/feature_game/data" />
-            <option value="$PROJECT_DIR$/feature_game/domain" />
-            <option value="$PROJECT_DIR$/feature_game/presentation" />
-            <option value="$PROJECT_DIR$/feature_record" />
-            <option value="$PROJECT_DIR$/feature_record/data" />
-            <option value="$PROJECT_DIR$/feature_record/domain" />
-            <option value="$PROJECT_DIR$/feature_record/presentation" />
+            <option value="$PROJECT_DIR$/feature/record" />
             <option value="$PROJECT_DIR$/injector" />
           </set>
         </option>

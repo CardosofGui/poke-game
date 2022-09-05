@@ -10,6 +10,7 @@
       <module name="PokeGame.core.domain" target="11" />
       <module name="PokeGame.core.presentation" target="11" />
       <module name="PokeGame.feature.game" target="11" />
+      <module name="PokeGame.feature.record" target="11" />
       <module name="PokeGame.feature_game.data" target="11" />
       <module name="PokeGame.feature_game.domain" target="11" />
       <module name="PokeGame.feature_game.presentation" target="11" />

@@ -13,14 +13,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.game.presentation.compose.InitialScreen
+import com.example.game.presentation.viewmodel.GameViewModel
 import com.example.pokegame.presentation.NavigationItem
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.PokeGameTheme
 import com.example.presentation.compose.GameScreen
-import com.example.presentation.compose.InitialScreen
-import com.example.presentation.compose.RecordsScreen
-import com.example.presentation.viewmodel.GameViewModel
-import com.example.presentation.viewmodel.RecordViewModel
+import com.example.record.presentation.compose.RecordsScreen
+import com.example.record.presentation.viewmodel.RecordViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivityCompose : ComponentActivity() {

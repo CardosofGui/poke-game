@@ -53,12 +53,10 @@ android {
 
 dependencies {
     implementation project(':injector')
-    implementation project(':feature_game:presentation')
-    implementation project(path: ':feature_game:data')
-    implementation project(path: ':feature_game:domain')
-    implementation project(path: ':feature_record:domain')
-    implementation project(path: ':feature_record:data')
-    implementation project(path: ':feature_record:presentation')
+    implementation project(':feature:game')
+    implementation project(':feature:record')
+
+
     implementation project(path: ':core:data')
     implementation project(path: ':core:domain')
     implementation project(path: ':core:presentation')

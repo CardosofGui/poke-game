@@ -31,16 +31,13 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':feature_game:presentation')
-    implementation project(path: ':feature_record:presentation')
-    implementation project(path: ':feature_game:data')
-    implementation project(path: ':feature_record:data')
-    implementation project(path: ':feature_game:domain')
-    implementation project(path: ':feature_record:domain')
+    implementation project(':feature:game')
+    implementation project(':feature:record')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
+    implementation project(path: ':core:data')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
