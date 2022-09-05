@@ -12,6 +12,7 @@
       <module name="PokeGame.feature_record.data" target="11" />
       <module name="PokeGame.feature_record.domain" target="11" />
       <module name="PokeGame.feature_record.presentation" target="11" />
+      <module name="PokeGame.injector" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

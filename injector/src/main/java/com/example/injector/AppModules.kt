@@ -1,4 +1,4 @@
-package com.example.pokegame.domain.koin
+package com.example.injector
 
 import android.util.Log
 import com.core.data.implementation.GeneralErrorHandlerImplementation

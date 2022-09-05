@@ -1,4 +1,4 @@
-package com.example.pokegame.domain.koin
+package com.example.injector
 
 import android.content.Context
 import androidx.startup.Initializer

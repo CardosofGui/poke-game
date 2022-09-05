@@ -41,7 +41,7 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.example.pokegame.domain.koin.KoinInitializer"
+                android:name="com.example.injector.KoinInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>

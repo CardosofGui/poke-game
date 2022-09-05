@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/feature_record/data" />
             <option value="$PROJECT_DIR$/feature_record/domain" />
             <option value="$PROJECT_DIR$/feature_record/presentation" />
+            <option value="$PROJECT_DIR$/injector" />
           </set>
         </option>
       </GradleProjectSettings>

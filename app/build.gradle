@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation project(':injector')
     implementation project(':feature_game:presentation')
     implementation project(path: ':feature_game:data')
     implementation project(path: ':feature_game:domain')
