@@ -14,3 +14,11 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PokeGame"
 include ':app'
+include ':feature_record'
+include ':feature_game'
+include ':feature_game:presentation'
+include ':feature_game:domain'
+include ':feature_game:data'
+include ':feature_record:domain'
+include ':feature_record:data'
+include ':feature_record:presentation'

@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -18,8 +16,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.pokegame.presentation.NavigationItem
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.PokeGameTheme
-import com.example.pokegame.presentation.viewmodel.GameViewModel
-import com.example.pokegame.presentation.viewmodel.RecordViewModel
+import com.example.presentation.compose.GameScreen
+import com.example.presentation.compose.InitialScreen
+import com.example.presentation.compose.RecordsScreen
+import com.example.presentation.viewmodel.GameViewModel
+import com.example.presentation.viewmodel.RecordViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivityCompose : ComponentActivity() {

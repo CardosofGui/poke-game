@@ -1,17 +1,16 @@
 package com.example.pokegame.domain.koin
 
 import android.util.Log
-import com.example.pokegame.data.implementation.GeneralErrorHandlerImplementation
-import com.example.pokegame.data.repository.PokemonRepository
-import com.example.pokegame.data.repository.RecordRepository
-import com.example.pokegame.presentation.viewmodel.GameViewModel
-import com.example.pokegame.presentation.viewmodel.RecordViewModel
-import com.example.pokegame.data.implementation.PokemonImplementation
-import com.example.pokegame.data.implementation.RecordImplementation
-import com.example.pokegame.domain.usecase.GameUseCase
-import com.example.pokegame.domain.usecase.GetAllPokemonUseCase
-import com.example.pokegame.domain.usecase.GetAllRecordsUseCase
-import com.example.pokegame.domain.usecase.InsertRecordUseCase
+import com.example.data.implementation.*
+import com.example.data.repository.InsertRecordRepository
+import com.example.data.repository.PokemonRepository
+import com.example.data.repository.RecordRepository
+import com.example.domain.usecase.GameUseCase
+import com.example.domain.usecase.GetAllPokemonUseCase
+import com.example.domain.usecase.GetAllRecordsUseCase
+import com.example.domain.usecase.InsertRecordUseCase
+import com.example.presentation.viewmodel.GameViewModel
+import com.example.presentation.viewmodel.RecordViewModel
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
@@ -27,9 +26,9 @@ import org.koin.dsl.module
 object AppModules {
 
     fun getModules() : List<Module> = listOf(
-        viewModelModule(),
         repositoryModule(),
         useCaseModule(),
+        viewModelModule(),
     )
 
     private fun viewModelModule() = module {
@@ -47,7 +46,16 @@ object AppModules {
 
         single { RecordImplementation(createService(POKEGAME_BASE), get()) }
 
-        single { GeneralErrorHandlerImplementation() }
+        single { GeneralErrorHandlerRecordImplementation() }
+
+
+
+        // Module feature_game
+        factory { InsertRecordRepository(get()) }
+
+        single { GeneralErrorHandlerGameGameImplementation() }
+
+        single { InsertRecordImplementation(createService(POKEGAME_BASE), get()) }
     }
 
     private fun useCaseModule() = module {
