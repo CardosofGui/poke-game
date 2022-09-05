@@ -8,12 +8,5 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 object CustomColors {
-    val playColor = Color(0xFFFFCA05)
-    val infoColor = Color(0xFF3A59A5)
     val bottomNavigationColor = Color(0xFFDADADA)
-    val teamRedColor = Color(0xFFEF564E)
-    val teamBlueColor = Color(0xFF5489F1)
-    val teamYellowColor = Color(0xFFF3D852)
-    val hidePokemonColor = Color(0xFFCCCCCC)
-    val timerColor = Color(0xFFFF7770)
 }
