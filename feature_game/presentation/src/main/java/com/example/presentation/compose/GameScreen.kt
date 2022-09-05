@@ -21,8 +21,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.core.data.entity.UserPointsModel
+import com.core.presentation.utils.CustomColors
+import com.core.presentation.utils.CustomFonts
 import com.example.data.entity.PokemonResult
-import com.example.data.entity.UserPointsModelGame
 import com.feature_game.presentation.R
 import com.example.presentation.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
@@ -97,7 +99,7 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
             CardInsertPoints(
                 points = gameViewModel.getPoints(),
                 submitInsert = { name, person, team ->
-                    val userPoints = UserPointsModelGame(
+                    val userPoints = UserPointsModel(
                         null,
                         username = name,
                         points = gameViewModel.getPoints(),

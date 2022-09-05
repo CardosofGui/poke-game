@@ -1,20 +1,21 @@
 package com.example.data.implementation
 
+import com.core.data.errorhandler.Results
+import com.core.data.implementation.GeneralErrorHandlerImplementation
 import com.example.data.entity.PokemonsApiResult
-import com.example.data.errorhandler.ResultsGame
 import io.ktor.client.*
 import io.ktor.client.request.*
 
 
-class PokemonImplementation(private val client : HttpClient, private val generalErrorHandlerGameImplementation: GeneralErrorHandlerGameGameImplementation) {
+class PokemonImplementation(private val client : HttpClient, private val generalErrorHandlerImplementation: GeneralErrorHandlerImplementation) {
 
-    suspend fun getAllPokemon(): ResultsGame<PokemonsApiResult> {
+    suspend fun getAllPokemon(): Results<PokemonsApiResult> {
         return try {
             val response : PokemonsApiResult = client.get(path = "api/v2/pokemon?limit=389")
 
-            ResultsGame.Sucess(response)
+            Results.Sucess(response)
         } catch (t : Throwable) {
-            ResultsGame.Error(generalErrorHandlerGameImplementation.getError(t))
+            Results.Error(generalErrorHandlerImplementation.getError(t))
         }
     }
 }

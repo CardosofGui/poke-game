@@ -2,10 +2,10 @@ package com.example.presentation.viewmodel
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
+import com.core.data.entity.UserPointsModel
+import com.core.data.errorhandler.ErrorEntity
+import com.core.data.errorhandler.Results
 import com.example.data.entity.PokemonResult
-import com.example.data.entity.UserPointsModelGame
-import com.example.data.errorhandler.ErrorEntityGame
-import com.example.data.errorhandler.ResultsGame
 import com.example.domain.Game
 import com.example.domain.usecase.GameUseCase
 import kotlinx.coroutines.launch
@@ -27,15 +27,15 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
 
     fun getAllPokemon() = viewModelScope.launch {
         when(val result = gameUseCase.getAllPokemonUseCase.invoke()) {
-            is ResultsGame.Sucess -> {
+            is Results.Sucess -> {
                 _pokemonList.clear()
                 _pokemonList.addAll(result.data.results)
             }
-            is ResultsGame.Error -> {
+            is Results.Error -> {
                 errorStatus = when(result.error)  {
-                    is ErrorEntityGame.Network -> "Conexão com a Internet Falhou"
-                    is ErrorEntityGame.ServiceUnavailable -> "Serviço Indisponivel"
-                    is ErrorEntityGame.Unknown -> "Falha ao Receber Dados"
+                    is ErrorEntity.Network -> "Conexão com a Internet Falhou"
+                    is ErrorEntity.ServiceUnavailable -> "Serviço Indisponivel"
+                    is ErrorEntity.Unknown -> "Falha ao Receber Dados"
                 }
             }
         }
@@ -58,16 +58,16 @@ class GameViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     }
     fun getPoints() = pointsList.sum().toString()
 
-    fun insertRecord(userPoints: UserPointsModelGame) = viewModelScope.launch {
+    fun insertRecord(userPoints: UserPointsModel) = viewModelScope.launch {
         statusInsert = when(val result = gameUseCase.insertRecordUseCase(userPoints)) {
-            is ResultsGame.Sucess -> {
+            is Results.Sucess -> {
                 "Record salvo com sucesso!"
             }
-            is ResultsGame.Error -> {
+            is Results.Error -> {
                 when(result.error)  {
-                    is ErrorEntityGame.Network -> "Conexão com a Internet Falhou"
-                    is ErrorEntityGame.ServiceUnavailable -> "Serviço Indisponivel"
-                    is ErrorEntityGame.Unknown -> "Falha ao Inserir Dados"
+                    is ErrorEntity.Network -> "Conexão com a Internet Falhou"
+                    is ErrorEntity.ServiceUnavailable -> "Serviço Indisponivel"
+                    is ErrorEntity.Unknown -> "Falha ao Inserir Dados"
                 }
             }
         }

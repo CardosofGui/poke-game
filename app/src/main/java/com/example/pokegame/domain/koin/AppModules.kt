@@ -1,6 +1,7 @@
 package com.example.pokegame.domain.koin
 
 import android.util.Log
+import com.core.data.implementation.GeneralErrorHandlerImplementation
 import com.example.data.implementation.*
 import com.example.data.repository.InsertRecordRepository
 import com.example.data.repository.PokemonRepository
@@ -46,14 +47,10 @@ object AppModules {
 
         single { RecordImplementation(createService(POKEGAME_BASE), get()) }
 
-        single { GeneralErrorHandlerRecordImplementation() }
-
-
+        single { GeneralErrorHandlerImplementation() }
 
         // Module feature_game
         factory { InsertRecordRepository(get()) }
-
-        single { GeneralErrorHandlerGameGameImplementation() }
 
         single { InsertRecordImplementation(createService(POKEGAME_BASE), get()) }
     }
@@ -95,7 +92,7 @@ object AppModules {
                     }
                 }
 
-                level = LogLevel.NONE
+                level = LogLevel.ALL
             }
 
             install(ResponseObserver) {

@@ -53,15 +53,18 @@ android {
 
 dependencies {
     implementation project(':feature_game:presentation')
-
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation "androidx.compose.ui:ui:$compose_ui_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     implementation project(path: ':feature_game:data')
     implementation project(path: ':feature_game:domain')
     implementation project(path: ':feature_record:domain')
     implementation project(path: ':feature_record:data')
     implementation project(path: ':feature_record:presentation')
+    implementation project(path: ':core:data')
+    implementation project(path: ':core:domain')
+    implementation project(path: ':core:presentation')
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
     def koin_version= "3.2.0"
 

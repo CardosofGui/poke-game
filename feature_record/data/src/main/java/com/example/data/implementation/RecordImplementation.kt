@@ -1,27 +1,28 @@
 package com.example.data.implementation
 
-import com.example.data.entity.ResultInsertRecord
-import com.example.data.entity.UserPointsModelRecord
-import com.example.data.errorhandler.ResultsRecord
+import com.core.data.entity.ResultInsert
+import com.core.data.entity.UserPointsModel
+import com.core.data.errorhandler.Results
+import com.core.data.implementation.GeneralErrorHandlerImplementation
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 
-class RecordImplementation(private val client : HttpClient, private val generalErrorHandlerImplementation: GeneralErrorHandlerRecordImplementation) {
+class RecordImplementation(private val client : HttpClient, private val generalErrorHandlerImplementation: GeneralErrorHandlerImplementation) {
 
-    suspend fun getAllRecords(): ResultsRecord<List<UserPointsModelRecord>> {
+    suspend fun getAllRecords(): Results<List<UserPointsModel>> {
         return try {
-            val response : List<UserPointsModelRecord> = client.get(path = "api/pokeRecord/all")
+            val response : List<UserPointsModel> = client.get(path = "api/pokeRecord/all")
 
-            ResultsRecord.Sucess(response)
+            Results.Sucess(response)
         } catch (t : Throwable) {
-            ResultsRecord.Error(generalErrorHandlerImplementation.getError(t))
+            Results.Error(generalErrorHandlerImplementation.getError(t))
         }
     }
-    suspend fun insertRecord(userPoints: UserPointsModelRecord): ResultsRecord<ResultInsertRecord> {
+    suspend fun insertRecord(userPoints: UserPointsModel): Results<ResultInsert> {
         return try {
-            val response : ResultInsertRecord = client.submitForm(
+            val response : ResultInsert = client.submitForm(
                 path = "api/pokeRecord/insert",
                 formParameters = Parameters.build {
                     append("pokegame_username", userPoints.username)
@@ -30,9 +31,9 @@ class RecordImplementation(private val client : HttpClient, private val generalE
                     append("pokegame_person", userPoints.person)
                 }
             )
-            ResultsRecord.Sucess(response)
+            Results.Sucess(response)
         } catch (t : Throwable) {
-            ResultsRecord.Error(generalErrorHandlerImplementation.getError(t))
+            Results.Error(generalErrorHandlerImplementation.getError(t))
         }
     }
 }

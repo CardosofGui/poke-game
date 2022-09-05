@@ -19,7 +19,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.data.entity.UserPointsModelRecord
+import com.core.data.entity.UserPointsModel
+import com.core.presentation.utils.CustomColors
+import com.core.presentation.utils.CustomFonts
 import com.example.presentation.viewmodel.RecordViewModel
 import com.feature_record.presentation.R
 
@@ -65,10 +67,10 @@ fun RecordsScreen(recordViewModel: RecordViewModel) {
 }
 
 @Composable
-fun RecordCard(userPointsModelRecord: UserPointsModelRecord) {
+fun RecordCard(userPointsModelRecord: UserPointsModel) {
     val userImage = if(userPointsModelRecord.person == "M") R.drawable.treinador else R.drawable.treinadora
     val teamImage = if(userPointsModelRecord.team == "R") R.drawable.team_red else if(userPointsModelRecord.team == "B") R.drawable.team_blue else R.drawable.team_yellow
-    val backgroundTeamColor = if(userPointsModelRecord.team == "R") CustomColorsGame.teamRedColor else if(userPointsModelRecord.team == "B") CustomColorsGame.teamBlueColor else CustomColorsGame.teamYellowColor
+    val backgroundTeamColor = if(userPointsModelRecord.team == "R") CustomColors.teamRedColor else if(userPointsModelRecord.team == "B") CustomColors.teamBlueColor else CustomColors.teamYellowColor
 
     Card(
         backgroundColor = backgroundTeamColor,
@@ -124,7 +126,7 @@ fun ErrorStatus(error : String, reload : () -> Unit) {
     ) {
         Text(
             text = error,
-            fontFamily = CustomFontsGame.Alata,
+            fontFamily = CustomFonts.Alata,
             fontSize = 24.sp,
             color = Color.Red,
             fontWeight = FontWeight.Bold,
@@ -132,11 +134,14 @@ fun ErrorStatus(error : String, reload : () -> Unit) {
             textAlign = TextAlign.Center
         )
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Button(
                 onClick = { reload() },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = CustomColorsGame.infoColor,
+                    backgroundColor = CustomColors.infoColor,
                     contentColor = Color.White
                 )
             ) {
@@ -146,17 +151,4 @@ fun ErrorStatus(error : String, reload : () -> Unit) {
             }
         }
     }
-}
-
-object CustomColorsGame {
-    val infoColor = Color(0xFF3A59A5)
-    val teamRedColor = Color(0xFFEF564E)
-    val teamBlueColor = Color(0xFF5489F1)
-    val teamYellowColor = Color(0xFFF3D852)
-}
-
-object CustomFontsGame {
-    val Alata = FontFamily(
-        Font(R.font.alata_regular)
-    )
 }

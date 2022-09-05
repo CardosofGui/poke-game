@@ -1,17 +1,18 @@
 package com.example.data.implementation
 
-import com.example.data.entity.ResultInsertGame
-import com.example.data.entity.UserPointsModelGame
-import com.example.data.errorhandler.ResultsGame
+import com.core.data.entity.ResultInsert
+import com.core.data.entity.UserPointsModel
+import com.core.data.errorhandler.Results
+import com.core.data.implementation.GeneralErrorHandlerImplementation
 import io.ktor.client.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 
-class InsertRecordImplementation(private val client : HttpClient, private val generalErrorHandlerGameImplementation: GeneralErrorHandlerGameGameImplementation) {
+class InsertRecordImplementation(private val client : HttpClient, private val generalErrorHandlerImplementation: GeneralErrorHandlerImplementation) {
 
-    suspend fun insertRecord(userPoints: UserPointsModelGame): ResultsGame<ResultInsertGame> {
+    suspend fun insertRecord(userPoints: UserPointsModel): Results<ResultInsert> {
         return try {
-            val response : ResultInsertGame = client.submitForm(
+            val response : ResultInsert = client.submitForm(
                 path = "api/pokeRecord/insert",
                 formParameters = Parameters.build {
                     append("pokegame_username", userPoints.username)
@@ -20,9 +21,9 @@ class InsertRecordImplementation(private val client : HttpClient, private val ge
                     append("pokegame_person", userPoints.person)
                 }
             )
-            ResultsGame.Sucess(response)
+            Results.Sucess(response)
         } catch (t : Throwable) {
-            ResultsGame.Error(generalErrorHandlerGameImplementation.getError(t))
+            Results.Error(generalErrorHandlerImplementation.getError(t))
         }
     }
 }

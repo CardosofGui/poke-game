@@ -28,6 +28,9 @@ import androidx.navigation.NavController
 import coil.ComponentRegistry
 import coil.ImageLoader
 import coil.compose.rememberImagePainter
+import com.core.presentation.compose.ErrorStatus
+import com.core.presentation.utils.CustomColors
+import com.core.presentation.utils.CustomFonts
 import com.feature_game.presentation.R
 import com.example.presentation.viewmodel.GameViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
@@ -175,40 +178,6 @@ fun CardDialog() {
 }
 
 @Composable
-fun ErrorStatus(error : String, reload : () -> Unit) {
-    Column(
-        Modifier
-            .background(Color.White)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = error,
-            fontFamily = CustomFonts.Alata,
-            fontSize = 24.sp,
-            color = Color.Red,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-            Button(
-                onClick = { reload() },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = CustomColors.infoColor,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = "Recarregar",
-                )
-            }
-        }
-    }
-}
-
-@Composable
 fun LoadingPokemon() {
     Column(
         Modifier
@@ -226,21 +195,4 @@ fun LoadingPokemon() {
             )
         }
     }
-}
-
-object CustomColors {
-    val playColor = Color(0xFFFFCA05)
-    val infoColor = Color(0xFF3A59A5)
-    val hidePokemonColor = Color(0xFFCCCCCC)
-    val timerColor = Color(0xFFFF7770)
-}
-
-object CustomFonts {
-    val Alata = FontFamily(
-        Font(R.font.alata_regular)
-    )
-
-    val PokeFont = FontFamily(
-        Font(R.font.pokemon_solid)
-    )
 }
