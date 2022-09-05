@@ -4,16 +4,8 @@ plugins {
 }
 
 android {
-    namespace 'com.core.presentation'
+    namespace 'com.example.game'
     compileSdk 32
-
-    buildFeatures {
-        // Enables Jetpack Compose for this module
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.3.0'
-    }
 
     defaultConfig {
         minSdk 21
@@ -22,6 +14,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -45,21 +38,4 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
-    // Compose
-    api "androidx.compose.ui:ui:$compose_ui_version"
-    api "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
-    api Compose.compose_activity
-    api Compose.compose_animation
-    api Compose.compose_lifecycle
-    api Compose.compose_material
-    api Compose.compose_navigation
-    api Compose.compose_ui
-
-    // Coil
-    api Coil.coil_compose
-    api Coil.coil_gif
-
-    // FancyToast
-    api FancyToast.fancytoast
 }

@@ -31,14 +31,12 @@ android {
 }
 
 dependencies {
-
     implementation project(path: ':feature_game:presentation')
     implementation project(path: ':feature_record:presentation')
     implementation project(path: ':feature_game:data')
     implementation project(path: ':feature_record:data')
     implementation project(path: ':feature_game:domain')
     implementation project(path: ':feature_record:domain')
-    def koin_version= "3.2.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
@@ -48,12 +46,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Koin
-    api "io.insert-koin:koin-core:$koin_version"
-    api "io.insert-koin:koin-android:$koin_version"
+    implementation Koin.koin_insert
+    implementation Koin.koin_android
 
     // Ktor && Serialization
-    api 'io.ktor:ktor-client-android:1.5.0'
-    api 'io.ktor:ktor-client-serialization:1.5.0'
-    api 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'
-    api 'io.ktor:ktor-client-logging-jvm:1.5.0'
+    implementation Ktor.ktor_serialization
+    implementation Ktor.ktor_android
+    implementation Ktor.kotlin_serialization
+    implementation Ktor.ktor_logging
 }

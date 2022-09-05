@@ -42,10 +42,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Ktor && Serialization
-    api 'io.ktor:ktor-client-android:1.5.0'
-    api 'io.ktor:ktor-client-serialization:1.5.0'
-    api 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'
+    api Ktor.ktor_serialization
+    api Ktor.ktor_android
+    api Ktor.kotlin_serialization
 
     // Startup
-    api "androidx.startup:startup-runtime:1.1.1"
+    api Startup.startup
 }
