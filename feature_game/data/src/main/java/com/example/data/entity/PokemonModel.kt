@@ -52,7 +52,7 @@ data class PokemonModel(
 
     fun getAbilities(): String {
         var habilidades = ""
-        abilities?.forEach { habilidades += it.ability.name.capitalize() + ", " }
+        abilities?.forEach { habilidades += it.ability.name.replaceFirstChar { char-> char.uppercase() }+ ", " }
 
         return habilidades.substring(0, habilidades.length-2)
     }

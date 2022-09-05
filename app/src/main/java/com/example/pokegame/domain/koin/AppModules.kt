@@ -49,7 +49,6 @@ object AppModules {
 
         single { GeneralErrorHandlerImplementation() }
 
-        // Module feature_game
         factory { InsertRecordRepository(get()) }
 
         single { InsertRecordImplementation(createService(POKEGAME_BASE), get()) }
