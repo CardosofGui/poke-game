@@ -13,6 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.core.presentation.AnimationInitialScreenTransition
+import com.core.presentation.AnimationScreenTransition
 import com.example.game.presentation.compose.InitialScreen
 import com.example.game.presentation.viewmodel.GameViewModel
 import com.example.pokegame.presentation.NavigationItem
@@ -27,6 +29,8 @@ class MainActivityCompose : ComponentActivity() {
 
     private val gameViewModel : GameViewModel by viewModel()
     private val recordsViewModel : RecordViewModel by viewModel()
+
+    private var initialTransition = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +54,21 @@ class MainActivityCompose : ComponentActivity() {
             bottomBar = { BottomNavigationBar(navController) },
             content = {
                 NavHost(navController = navController, startDestination = "initial", modifier = Modifier.padding(it)) {
-                    composable("initial") { InitialScreen(navController, gameViewModel) }
-                    composable("records") { RecordsScreen(recordsViewModel) }
-                    composable("game") { GameScreen(gameViewModel, navController) }
+                    composable("initial") {
+                        if(initialTransition) {
+                            AnimationScreenTransition {
+                                InitialScreen(navController = navController, gameViewModel = gameViewModel)
+                            }
+                        } else {
+                            AnimationInitialScreenTransition {
+                                InitialScreen(navController, gameViewModel)
+                            }
+
+                            initialTransition = true
+                        }
+                    }
+                    composable("records") { AnimationScreenTransition { RecordsScreen(recordsViewModel) } }
+                    composable("game") { AnimationInitialScreenTransition { GameScreen(gameViewModel, navController) } }
                 }
             },
             contentColor = Color.White,
