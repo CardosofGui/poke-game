@@ -1,15 +1,19 @@
 package com.example.presentation.compose
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -31,6 +35,7 @@ import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     val game = gameViewModel.game
@@ -58,26 +63,28 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     }
 
     if(timerWinGame) {
+        val points = ticks
+
         LaunchedEffect(Unit) {
             gameTimerCount = 5 // Resetando o valor do Timer do Jogo
+            ticks = 5000
             hidePokemonColor = null
 
-            delay(500.milliseconds) // Delay 1 Seg. antes de trocar de jogo
+            delay(500.milliseconds) // Delay 0.5 Seg. antes de trocar de jogo
 
             hidePokemonColor = CustomColors.hidePokemonColor
-            gameViewModel.winGame(ticks)
-            ticks = 5000
             timerWinGame = false
+            gameViewModel.winGame(points)
         }
     }
     if(timerLossGame) {
         LaunchedEffect(Unit) {
             gameTimerCount = 5 // Resetando o valor do Timer do Jogo
             timerGameStatus = false
-            hidePokemonColor = null
             ticks = 5000
+            hidePokemonColor = null
 
-            delay(2.seconds) // Delay 2 Seg. antes de trocar de jogo
+            delay(2.seconds) // Delay 2 Seg. antes de finalizar o jogo
 
             timerLossGame = false
             openDialog =  true
@@ -129,15 +136,29 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
                 .fillMaxWidth()
         )
         if (game != null) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    game.correctPoke.getImage()
-                ),
-                contentDescription = "Imagem Pokemon Correto",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(160.dp),
-                colorFilter = hidePokemonColor?.let { ColorFilter.tint(it) })
+            
+            AnimatedContent(
+                targetState = hidePokemonColor,
+                transitionSpec = {
+                    if(targetState == null) {
+                        slideInVertically { height -> -height } + fadeIn() with
+                                slideOutVertically { height -> height } + fadeOut()
+                    } else {
+                        slideInVertically { height -> -height } + fadeIn() with
+                                slideOutVertically { height -> height } + fadeOut()
+                    }
+                }
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        game.correctPoke.getImage()
+                    ),
+                    contentDescription = "Imagem Pokemon Correto",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp),
+                    colorFilter = it?.let { it1 -> ColorFilter.tint(it1) })
+            }
 
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(game.pokemonList) { poke ->
@@ -189,6 +210,7 @@ fun ButtonAnswer(poke : PokemonResult, onClick : () -> Unit){
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CardInsertPoints(
     points: String,
@@ -264,23 +286,37 @@ fun CardInsertPoints(
                     .padding(top = 6.dp)
             )
 
-            Row {
-                Image(
-                    painter = painterResource(id = R.drawable.treinador),
-                    contentDescription = "Treinador",
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(90.dp)
-                        .clickable { personSelect = "M" }
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.treinadora),
-                    contentDescription = "Treinadora",
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(90.dp)
-                        .clickable { personSelect = "F" }
-                )
+            AnimatedContent(
+                targetState = personSelect,
+                transitionSpec = {
+                    fadeIn() with
+                            fadeOut()
+                }
+            ) {
+                Row {
+                    Image(
+                        painter = painterResource(id = R.drawable.treinador),
+                        contentDescription = "Treinador",
+                        modifier = Modifier
+                            .weight(1f)
+                            .size(90.dp)
+                            .clickable { personSelect = "M" },
+                        colorFilter = if (personSelect == "M") null else ColorFilter.tint(
+                            CustomColors.hidePokemonColor
+                        )
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.treinadora),
+                        contentDescription = "Treinadora",
+                        modifier = Modifier
+                            .weight(1f)
+                            .size(90.dp)
+                            .clickable { personSelect = "F" },
+                        colorFilter = if (personSelect == "F") null else ColorFilter.tint(
+                            CustomColors.hidePokemonColor
+                        )
+                    )
+                }
             }
 
             Image(
@@ -292,32 +328,51 @@ fun CardInsertPoints(
                     .padding(top = 6.dp)
             )
 
-            Row {
-                Image(
-                    painter = painterResource(id = R.drawable.team_red),
-                    contentDescription = "Team Red",
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(90.dp)
-                        .clickable { teamSelect = "R" }
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.team_blue),
-                    contentDescription = "Team Blue",
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(90.dp)
-                        .clickable { teamSelect = "B" }
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.team_yellow),
-                    contentDescription = "Team Yellow",
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(90.dp)
-                        .clickable { teamSelect = "Y" }
-                )
+
+            AnimatedContent(
+                targetState = teamSelect,
+                transitionSpec = {
+                    fadeIn() with
+                            fadeOut()
+                }
+            ) {
+                Row {
+                    Image(
+                        painter = painterResource(id = R.drawable.team_red),
+                        contentDescription = "Team Red",
+                        modifier = Modifier
+                            .weight(1f)
+                            .size(90.dp)
+                            .clickable { teamSelect = "R" },
+                        colorFilter = if (teamSelect == "R") null else ColorFilter.tint(
+                            CustomColors.hidePokemonColor
+                        )
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.team_blue),
+                        contentDescription = "Team Blue",
+                        modifier = Modifier
+                            .weight(1f)
+                            .size(90.dp)
+                            .clickable { teamSelect = "B" },
+                        colorFilter = if (teamSelect == "B") null else ColorFilter.tint(
+                            CustomColors.hidePokemonColor
+                        )
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.team_yellow),
+                        contentDescription = "Team Yellow",
+                        modifier = Modifier
+                            .weight(1f)
+                            .size(90.dp)
+                            .clickable { teamSelect = "Y" },
+                        colorFilter = if (teamSelect == "Y") null else ColorFilter.tint(
+                            CustomColors.hidePokemonColor
+                        )
+                    )
+                }
             }
+
 
             Column(
                 Modifier.fillMaxWidth(),
