@@ -18,8 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.core.data.entity.UserPointsModel
-import com.core.presentation.utils.CustomColors
-import com.core.presentation.utils.CustomFonts
+import com.example.core_android.presentation.utils.CustomColors
+import com.example.core_android.presentation.utils.CustomFonts
 import com.example.record.presentation.viewmodel.RecordViewModel
 import com.example.record.R
 

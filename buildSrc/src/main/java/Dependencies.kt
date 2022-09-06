@@ -31,7 +31,9 @@ object Startup {
 object Compose {
     const val compose_material = "androidx.compose.material:material:${Versions.compose_ui}"
     const val compose_animation = "androidx.compose.animation:animation:${Versions.compose_ui}"
-    const val compose_ui = "androidx.compose.ui:ui-tooling:${Versions.compose_ui}"
+    const val compose_ui_tooling = "androidx.compose.ui:ui-tooling:${Versions.compose_ui}"
+    const val compose_ui_tooling_preview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose_ui}"
+    const val compose_ui = "androidx.compose.ui:ui:${Versions.compose_ui}"
     const val compose_activity = "androidx.activity:activity-compose:${Versions.compose}"
     const val compose_lifecycle = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.compose_lifecycle}"
     const val compose_navigation = "androidx.navigation:navigation-compose:${Versions.compose_nav}"

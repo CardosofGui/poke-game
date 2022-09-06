@@ -14,10 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PokeGame"
 include ':app'
-include ':core'
-include ':core:presentation'
-include ':core:data'
-include ':core:domain'
 include ':injector'
 include ':feature:game'
 include ':feature:record'
+include ':core-android'

@@ -1,15 +1,12 @@
-import Versions.compose
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlinx-serialization")
     id("kotlin-android")
-    id("kotlin-android-extensions")
 }
 
 android {
-    namespace = "com.example.record"
+    namespace = "com.example.core_android"
     compileSdk = 32
 
     buildFeatures {
@@ -19,7 +16,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.0"
     }
-
 
     defaultConfig {
         minSdk = 21
@@ -52,12 +48,37 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("com.google.android.material:material:1.6.1")
-    implementation("junit:junit:4.12")
-    implementation("androidx.test.ext:junit-ktx:1.1.3")
-    implementation("androidx.test:monitor:1.5.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
-    implementation(project(mapOf("path" to ":core-android")))
+    // Ktor && Serialization
+    api(Ktor.ktor_serialization)
+    api(Ktor.ktor_android)
+    api(Ktor.kotlin_serialization)
+    api(Ktor.ktor_logging)
+
+    // Startup
+    api(Startup.startup)
+
+    // Koin
+    api(Koin.koin_android)
+    api(Koin.koin_insert)
+
+    // Compose
+    api(Compose.compose_ui)
+    api(Compose.compose_ui_tooling_preview)
+    api(Compose.compose_activity)
+    api(Compose.compose_animation)
+    api(Compose.compose_lifecycle)
+    api(Compose.compose_material)
+    api(Compose.compose_navigation)
+    api(Compose.compose_ui_tooling)
+
+    // Coil
+    api(Coil.coil_compose)
+    api(Coil.coil_gif)
+
+    // FancyToast
+    api(FancyToast.fancytoast)
 }

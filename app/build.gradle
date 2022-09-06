@@ -57,7 +57,5 @@ dependencies {
     implementation project(':feature:record')
 
 
-    implementation project(path: ':core:data')
-    implementation project(path: ':core:domain')
-    implementation project(path: ':core:presentation')
+    implementation project(path: ':core-android')
 }

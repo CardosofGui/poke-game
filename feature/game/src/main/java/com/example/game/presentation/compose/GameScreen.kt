@@ -24,10 +24,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.core.data.entity.UserPointsModel
-import com.core.presentation.utils.CustomColors
-import com.core.presentation.utils.CustomFonts
+import com.example.core_android.presentation.utils.CustomColors
+import com.example.core_android.presentation.utils.CustomFonts
 import com.example.game.data.entity.PokemonResult
 import com.example.game.R
+import com.example.game.domain.Game
 import com.example.game.presentation.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
@@ -41,12 +42,13 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     var gameTimerCount by remember { mutableStateOf(5) }
     var ticks by remember { mutableStateOf(5000) }
     var timerGameStatus by remember { mutableStateOf(true) }
-    var hidePokemonColor by remember { mutableStateOf<Color?>(CustomColors.hidePokemonColor) }
 
     var openDialog by remember { mutableStateOf(false) }
 
     var timerWinGame by remember { mutableStateOf(false) }
     var timerLossGame by remember { mutableStateOf(false) }
+
+    var hidePokemonColor by remember { mutableStateOf<Color?>(CustomColors.hidePokemonColor) }
 
     LaunchedEffect(Unit) {
         while (timerGameStatus) {
@@ -59,7 +61,6 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
             }
         }
     }
-
     if(timerWinGame) {
         val points = ticks
 
@@ -135,28 +136,7 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
         )
         if (game != null) {
             
-            AnimatedContent(
-                targetState = hidePokemonColor,
-                transitionSpec = {
-                    if(targetState == null) {
-                        slideInVertically { height -> -height } + fadeIn() with
-                                slideOutVertically { height -> height } + fadeOut()
-                    } else {
-                        slideInVertically { height -> -height } + fadeIn() with
-                                slideOutVertically { height -> height } + fadeOut()
-                    }
-                }
-            ) {
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        game.correctPoke.getImage()
-                    ),
-                    contentDescription = "Imagem Pokemon Correto",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(160.dp),
-                    colorFilter = it?.let { it1 -> ColorFilter.tint(it1) })
-            }
+            ImagePokemonHide(game = game, hidePokemonColor)
 
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(game.pokemonList) { poke ->
@@ -291,28 +271,19 @@ fun CardInsertPoints(
                             fadeOut(tween(500, 500))
                 }
             ) {
-                Row {
-                    Image(
-                        painter = painterResource(id = R.drawable.treinador),
-                        contentDescription = "Treinador",
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(90.dp)
-                            .clickable { personSelect = "M" },
-                        colorFilter = if (personSelect == "M") null else ColorFilter.tint(
-                            CustomColors.hidePokemonColor
-                        )
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    ImageChoose(
+                        itemSelect = personSelect,
+                        actionClick = { personSelect = "M" },
+                        confirm = "M",
+                        imageGender = R.drawable.treinador
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.treinadora),
-                        contentDescription = "Treinadora",
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(90.dp)
-                            .clickable { personSelect = "F" },
-                        colorFilter = if (personSelect == "F") null else ColorFilter.tint(
-                            CustomColors.hidePokemonColor
-                        )
+
+                    ImageChoose(
+                        itemSelect = personSelect,
+                        actionClick = { personSelect = "F" },
+                        confirm = "F",
+                        imageGender = R.drawable.treinadora
                     )
                 }
             }
@@ -334,39 +305,26 @@ fun CardInsertPoints(
                             fadeOut()
                 }
             ) {
-                Row {
-                    Image(
-                        painter = painterResource(id = R.drawable.team_red),
-                        contentDescription = "Team Red",
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(90.dp)
-                            .clickable { teamSelect = "R" },
-                        colorFilter = if (teamSelect == "R") null else ColorFilter.tint(
-                            CustomColors.hidePokemonColor
-                        )
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    ImageChoose(
+                        itemSelect = teamSelect,
+                        actionClick = { teamSelect = "R" },
+                        confirm = "R",
+                        imageGender = R.drawable.team_red
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.team_blue),
-                        contentDescription = "Team Blue",
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(90.dp)
-                            .clickable { teamSelect = "B" },
-                        colorFilter = if (teamSelect == "B") null else ColorFilter.tint(
-                            CustomColors.hidePokemonColor
-                        )
+
+                    ImageChoose(
+                        itemSelect = teamSelect,
+                        actionClick = { teamSelect = "B" },
+                        confirm = "B",
+                        imageGender = R.drawable.team_blue
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.team_yellow),
-                        contentDescription = "Team Yellow",
-                        modifier = Modifier
-                            .weight(1f)
-                            .size(90.dp)
-                            .clickable { teamSelect = "Y" },
-                        colorFilter = if (teamSelect == "Y") null else ColorFilter.tint(
-                            CustomColors.hidePokemonColor
-                        )
+
+                    ImageChoose(
+                        itemSelect = teamSelect,
+                        actionClick = { teamSelect = "Y" },
+                        confirm = "Y",
+                        imageGender = R.drawable.team_yellow
                     )
                 }
             }
@@ -376,7 +334,6 @@ fun CardInsertPoints(
                 Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Button(
                     onClick = {
                         submitInsert(
@@ -398,5 +355,56 @@ fun CardInsertPoints(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ImageChoose(
+    itemSelect : String,
+    actionClick : (String) -> Unit,
+    confirm : String,
+    imageGender : Int
+) {
+    Row() {
+        Image(
+            painter = painterResource(id = imageGender),
+            contentDescription = "Treinadora",
+            modifier = Modifier
+                .size(90.dp)
+                .clickable { actionClick(confirm) },
+            colorFilter = if (itemSelect == confirm) null else ColorFilter.tint(
+                CustomColors.hidePokemonColor
+            )
+        )
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun ImagePokemonHide(
+    game : Game,
+    hidePokemonColor : Color?
+) {
+    AnimatedContent(
+        targetState = hidePokemonColor,
+        transitionSpec = {
+            if(targetState == null) {
+                slideInVertically { height -> -height } + fadeIn() with
+                        slideOutVertically { height -> height } + fadeOut()
+            } else {
+                slideInVertically { height -> -height } + fadeIn() with
+                        slideOutVertically { height -> height } + fadeOut()
+            }
+        }
+    ) {
+        Image(
+            painter = rememberAsyncImagePainter(
+                game.correctPoke.getImage()
+            ),
+            contentDescription = "Imagem Pokemon Correto",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp),
+            colorFilter = it?.let { it1 -> ColorFilter.tint(it1) })
     }
 }

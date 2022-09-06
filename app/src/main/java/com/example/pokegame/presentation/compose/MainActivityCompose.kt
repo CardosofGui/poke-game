@@ -13,8 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.core.presentation.AnimationInitialScreenTransition
-import com.core.presentation.AnimationScreenTransition
+import com.example.core_android.presentation.AnimationInitialScreenTransition
+import com.example.core_android.presentation.AnimationScreenTransition
 import com.example.game.presentation.compose.InitialScreen
 import com.example.game.presentation.viewmodel.GameViewModel
 import com.example.pokegame.presentation.NavigationItem

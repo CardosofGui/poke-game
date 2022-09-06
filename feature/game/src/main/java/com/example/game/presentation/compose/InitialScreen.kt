@@ -25,9 +25,9 @@ import androidx.navigation.NavController
 import coil.ComponentRegistry
 import coil.ImageLoader
 import coil.compose.rememberImagePainter
-import com.core.presentation.compose.ErrorStatus
-import com.core.presentation.utils.CustomColors
-import com.core.presentation.utils.CustomFonts
+import com.example.core_android.presentation.compose.ErrorStatus
+import com.example.core_android.presentation.utils.CustomColors
+import com.example.core_android.presentation.utils.CustomFonts
 import com.example.game.presentation.viewmodel.GameViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 import com.example.game.R

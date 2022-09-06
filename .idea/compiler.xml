@@ -6,6 +6,7 @@
       <module name="PokeGame.buildSrc" target="11" />
       <module name="PokeGame.buildSrc.main" target="11" />
       <module name="PokeGame.buildSrc.test" target="11" />
+      <module name="PokeGame.core-android" target="11" />
       <module name="PokeGame.core.data" target="11" />
       <module name="PokeGame.core.domain" target="11" />
       <module name="PokeGame.core.presentation" target="11" />
