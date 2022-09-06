@@ -54,7 +54,11 @@ fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
         ) {
             if(openDialog.value) {
                 Dialog(onDismissRequest = { openDialog.value = false }) {
-                    CardDialog()
+                    CardDialog(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp, bottom = 20.dp)
+                    )
                 }
             }
 
@@ -129,7 +133,9 @@ fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
 }
 
 @Composable
-fun CardDialog() {
+fun CardDialog(
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
 
     val imageLoader = ImageLoader.Builder(context).components(fun ComponentRegistry.Builder.() {}).build()
@@ -137,9 +143,7 @@ fun CardDialog() {
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color.White,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp, bottom = 20.dp)
+        modifier = modifier
     ) {
         Column(
             Modifier
@@ -152,7 +156,8 @@ fun CardDialog() {
             Text(
                 text = "PokeGame é um jogo simples para por em prática os seus conhecimentos do mundo Pokémon através da brincadeira mais conhecida desse mundo, a \"Quem é esse Pokémon?\". \n\nNesse Quiz você terá 1 Foto de um Pokémon em preto e branco e 4 opções, e através dos traços da foto você deve adivinhar qual é o Pokémon.\n\nVocê terá 5 segundos para adivinhar e quão mais rapído e mais longe chegar acertando os Pokémons mais pontos acumulará o que ao final da partida poderá salvar seu Record em nosso banco de dados!",
                 fontWeight = FontWeight.Bold,
-                fontFamily = CustomFonts.Alata
+                fontFamily = CustomFonts.Alata,
+                color = Color.Black
             )
 
             Text(
@@ -160,6 +165,7 @@ fun CardDialog() {
                 fontWeight = FontWeight.Bold,
                 fontFamily = CustomFonts.Alata,
                 fontSize = 22.sp,
+                color = Color.Black,
                 modifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
             )
 

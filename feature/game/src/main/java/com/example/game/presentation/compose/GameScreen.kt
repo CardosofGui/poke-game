@@ -103,6 +103,9 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
             gameViewModel.resetGame()
         }) {
             CardInsertPoints(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp, bottom = 20.dp),
                 points = gameViewModel.getPoints(),
                 submitInsert = { name, person, team ->
                     val userPoints = UserPointsModel(
@@ -136,7 +139,12 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
         )
         if (game != null) {
             
-            ImagePokemonHide(game = game, hidePokemonColor)
+            ImagePokemonHide(
+                game = game, hidePokemonColor,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp)
+            )
 
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(game.pokemonList) { poke ->
@@ -192,7 +200,8 @@ fun ButtonAnswer(poke : PokemonResult, onClick : () -> Unit){
 @Composable
 fun CardInsertPoints(
     points: String,
-    submitInsert: (name : String, person : String, team : String) -> Unit
+    submitInsert: (name : String, person : String, team : String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var usernameEditText by remember { mutableStateOf("") }
     var personSelect by remember { mutableStateOf("M") }
@@ -201,9 +210,7 @@ fun CardInsertPoints(
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = Color.White,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp, bottom = 20.dp)
+        modifier = modifier
     ) {
         Column(
             Modifier
@@ -276,14 +283,18 @@ fun CardInsertPoints(
                         itemSelect = personSelect,
                         actionClick = { personSelect = "M" },
                         confirm = "M",
-                        imageGender = R.drawable.treinador
+                        imageGender = R.drawable.treinador,
+                        Modifier
+                            .size(90.dp)
                     )
 
                     ImageChoose(
                         itemSelect = personSelect,
                         actionClick = { personSelect = "F" },
                         confirm = "F",
-                        imageGender = R.drawable.treinadora
+                        imageGender = R.drawable.treinadora,
+                        Modifier
+                            .size(90.dp)
                     )
                 }
             }
@@ -310,21 +321,27 @@ fun CardInsertPoints(
                         itemSelect = teamSelect,
                         actionClick = { teamSelect = "R" },
                         confirm = "R",
-                        imageGender = R.drawable.team_red
+                        imageGender = R.drawable.team_red,
+                        Modifier
+                            .size(90.dp)
                     )
 
                     ImageChoose(
                         itemSelect = teamSelect,
                         actionClick = { teamSelect = "B" },
                         confirm = "B",
-                        imageGender = R.drawable.team_blue
+                        imageGender = R.drawable.team_blue,
+                        Modifier
+                            .size(90.dp)
                     )
 
                     ImageChoose(
                         itemSelect = teamSelect,
                         actionClick = { teamSelect = "Y" },
                         confirm = "Y",
-                        imageGender = R.drawable.team_yellow
+                        imageGender = R.drawable.team_yellow,
+                        Modifier
+                            .size(90.dp)
                     )
                 }
             }
@@ -363,14 +380,13 @@ fun ImageChoose(
     itemSelect : String,
     actionClick : (String) -> Unit,
     confirm : String,
-    imageGender : Int
+    imageGender : Int,
+    modifier: Modifier = Modifier
 ) {
-
     Image(
         painter = painterResource(id = imageGender),
         contentDescription = "Treinadora",
-        modifier = Modifier
-            .size(90.dp)
+        modifier = modifier
             .clickable { actionClick(confirm) },
         colorFilter = if (itemSelect == confirm) null else ColorFilter.tint(
             CustomColors.hidePokemonColor
@@ -383,7 +399,8 @@ fun ImageChoose(
 @Composable
 fun ImagePokemonHide(
     game : Game,
-    hidePokemonColor : Color?
+    hidePokemonColor : Color?,
+    modifier: Modifier = Modifier
 ) {
     AnimatedContent(
         targetState = hidePokemonColor,
@@ -402,9 +419,7 @@ fun ImagePokemonHide(
                 game.correctPoke.getImage()
             ),
             contentDescription = "Imagem Pokemon Correto",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp),
+            modifier = modifier,
             colorFilter = it?.let { it1 -> ColorFilter.tint(it1) })
     }
 }

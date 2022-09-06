@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.core.data.entity.UserPointsModel
+import com.example.core_android.presentation.compose.ErrorStatus
 import com.example.core_android.presentation.utils.CustomColors
 import com.example.core_android.presentation.utils.CustomFonts
 import com.example.record.presentation.viewmodel.RecordViewModel
@@ -50,7 +51,10 @@ fun RecordsScreen(recordViewModel: RecordViewModel) {
         if(recordsList.value.isNotEmpty()) {
             LazyColumn {
                 items(recordsList.value) {
-                    RecordCard(userPointsModelRecord = it)
+                    RecordCard(
+                        userPointsModelRecord = it,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
             }
         } else if(errorStatus.isNotEmpty()) {
@@ -59,20 +63,27 @@ fun RecordsScreen(recordViewModel: RecordViewModel) {
                 recordViewModel.errorStatus = ""
             }
         } else {
-            LoadingRecords()
+            LoadingRecords(
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxSize()
+            )
         }
     }
 }
 
 @Composable
-fun RecordCard(userPointsModelRecord: UserPointsModel) {
+fun RecordCard(
+    userPointsModelRecord: UserPointsModel,
+    modifier: Modifier = Modifier
+) {
     val userImage = if(userPointsModelRecord.person == "M") R.drawable.treinador else R.drawable.treinadora
     val teamImage = if(userPointsModelRecord.team == "R") R.drawable.team_red else if(userPointsModelRecord.team == "B") R.drawable.team_blue else R.drawable.team_yellow
     val backgroundTeamColor = if(userPointsModelRecord.team == "R") CustomColors.teamRedColor else if(userPointsModelRecord.team == "B") CustomColors.teamBlueColor else CustomColors.teamYellowColor
 
     Card(
         backgroundColor = backgroundTeamColor,
-        modifier = Modifier.padding(8.dp)
+        modifier = modifier
     ) {
         Row() {
             Image(painter = painterResource(id = userImage), contentDescription = "User Image", modifier = Modifier
@@ -95,11 +106,11 @@ fun RecordCard(userPointsModelRecord: UserPointsModel) {
 }
 
 @Composable
-fun LoadingRecords() {
+fun LoadingRecords(
+    modifier: Modifier = Modifier
+) {
     Column(
-        Modifier
-            .background(Color.White)
-            .fillMaxSize(),
+        modifier = modifier,
         verticalArrangement = Arrangement.Center
     ) {
         Column {
@@ -110,43 +121,6 @@ fun LoadingRecords() {
                     .fillMaxWidth()
                     .height(120.dp)
             )
-        }
-    }
-}
-
-@Composable
-fun ErrorStatus(error : String, reload : () -> Unit) {
-    Column(
-        Modifier
-            .background(Color.White)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = error,
-            fontFamily = CustomFonts.Alata,
-            fontSize = 24.sp,
-            color = Color.Red,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Button(
-                onClick = { reload() },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = CustomColors.infoColor,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = "Recarregar",
-                )
-            }
         }
     }
 }
