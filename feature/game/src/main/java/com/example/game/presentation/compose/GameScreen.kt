@@ -1,4 +1,4 @@
-package com.example.presentation.compose
+package com.example.game.presentation.compose
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -289,8 +287,8 @@ fun CardInsertPoints(
             AnimatedContent(
                 targetState = personSelect,
                 transitionSpec = {
-                    fadeIn() with
-                            fadeOut()
+                    fadeIn(tween(500, 500)) with
+                            fadeOut(tween(500, 500))
                 }
             ) {
                 Row {

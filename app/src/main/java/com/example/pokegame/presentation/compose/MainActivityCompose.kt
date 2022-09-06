@@ -20,7 +20,7 @@ import com.example.game.presentation.viewmodel.GameViewModel
 import com.example.pokegame.presentation.NavigationItem
 import com.example.pokegame.presentation.ui.theme.CustomColors
 import com.example.pokegame.presentation.ui.theme.PokeGameTheme
-import com.example.presentation.compose.GameScreen
+import com.example.game.presentation.compose.GameScreen
 import com.example.record.presentation.compose.RecordsScreen
 import com.example.record.presentation.viewmodel.RecordViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
