@@ -365,18 +365,18 @@ fun ImageChoose(
     confirm : String,
     imageGender : Int
 ) {
-    Row() {
-        Image(
-            painter = painterResource(id = imageGender),
-            contentDescription = "Treinadora",
-            modifier = Modifier
-                .size(90.dp)
-                .clickable { actionClick(confirm) },
-            colorFilter = if (itemSelect == confirm) null else ColorFilter.tint(
-                CustomColors.hidePokemonColor
-            )
+
+    Image(
+        painter = painterResource(id = imageGender),
+        contentDescription = "Treinadora",
+        modifier = Modifier
+            .size(90.dp)
+            .clickable { actionClick(confirm) },
+        colorFilter = if (itemSelect == confirm) null else ColorFilter.tint(
+            CustomColors.hidePokemonColor
         )
-    }
+    )
+
 }
 
 @OptIn(ExperimentalAnimationApi::class)
