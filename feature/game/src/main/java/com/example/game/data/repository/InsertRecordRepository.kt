@@ -1,6 +1,6 @@
 package com.example.game.data.repository
 
-import com.core.data.entity.UserPointsModel
+import com.example.core_android.data.entity.UserPointsModel
 import com.example.game.data.implementation.InsertRecordImplementation
 
 class InsertRecordRepository(private val insertRecordImplementation: InsertRecordImplementation) {

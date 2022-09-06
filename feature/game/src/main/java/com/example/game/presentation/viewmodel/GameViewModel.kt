@@ -2,7 +2,7 @@ package com.example.game.presentation.viewmodel
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.*
-import com.core.data.entity.UserPointsModel
+import com.example.core_android.data.entity.UserPointsModel
 import com.core.data.errorhandler.ErrorEntity
 import com.core.data.errorhandler.Results
 import com.example.game.data.entity.PokemonResult

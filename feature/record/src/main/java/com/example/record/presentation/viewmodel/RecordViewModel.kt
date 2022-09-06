@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.core.data.entity.UserPointsModel
+import com.example.core_android.data.entity.UserPointsModel
 import com.core.data.errorhandler.ErrorEntity
 import com.core.data.errorhandler.Results
 import com.example.record.domain.usecase.GetAllRecordsUseCase

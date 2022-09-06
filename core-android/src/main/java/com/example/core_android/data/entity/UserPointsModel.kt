@@ -1,4 +1,4 @@
-package com.core.data.entity
+package com.example.core_android.data.entity
 
 import kotlinx.serialization.Serializable
 

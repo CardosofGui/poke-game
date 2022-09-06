@@ -28,6 +28,7 @@ import coil.compose.rememberImagePainter
 import com.example.core_android.presentation.compose.ErrorStatus
 import com.example.core_android.presentation.utils.CustomColors
 import com.example.core_android.presentation.utils.CustomFonts
+import com.example.core_android.presentation.utils.InitialScreenTexts
 import com.example.game.presentation.viewmodel.GameViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 import com.example.game.R
@@ -71,7 +72,7 @@ fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
             )
 
             Text(
-                text = "Seja bem vindo(a) treinad(a) Pokémon! Está pronto para por em prática seus conhecimentos do fantástico mundo Pokémon?",
+                text = InitialScreenTexts.WELCOME_LABEL,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -95,7 +96,7 @@ fun InitialScreen(navController: NavController?, gameViewModel: GameViewModel) {
                     )
                 ) {
                     Text(
-                        text = "COMO JOGAR?",
+                        text = InitialScreenTexts.HOW_PLAY,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -154,14 +155,14 @@ fun CardDialog(
             Image(painter = painterResource(id = R.drawable.info_text), contentDescription = "Pokegame Info")
 
             Text(
-                text = "PokeGame é um jogo simples para por em prática os seus conhecimentos do mundo Pokémon através da brincadeira mais conhecida desse mundo, a \"Quem é esse Pokémon?\". \n\nNesse Quiz você terá 1 Foto de um Pokémon em preto e branco e 4 opções, e através dos traços da foto você deve adivinhar qual é o Pokémon.\n\nVocê terá 5 segundos para adivinhar e quão mais rapído e mais longe chegar acertando os Pokémons mais pontos acumulará o que ao final da partida poderá salvar seu Record em nosso banco de dados!",
+                text = InitialScreenTexts.INSTRUCTION,
                 fontWeight = FontWeight.Bold,
                 fontFamily = CustomFonts.Alata,
                 color = Color.Black
             )
 
             Text(
-                text = "• Demonstração",
+                text = InitialScreenTexts.DEMO,
                 fontWeight = FontWeight.Bold,
                 fontFamily = CustomFonts.Alata,
                 fontSize = 22.sp,
@@ -191,7 +192,7 @@ fun LoadingPokemon() {
         Column() {
             Image(
                 painter = painterResource(id = R.drawable.loading_text),
-                contentDescription = "Carregando Records",
+                contentDescription = "Carregando Pokémon",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)

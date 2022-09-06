@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -23,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.core.data.entity.UserPointsModel
+import com.example.core_android.data.entity.UserPointsModel
 import com.example.core_android.presentation.utils.CustomColors
 import com.example.core_android.presentation.utils.CustomFonts
 import com.example.game.data.entity.PokemonResult
@@ -33,8 +35,6 @@ import com.example.game.presentation.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     val game = gameViewModel.game
@@ -49,6 +49,8 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     var timerLossGame by remember { mutableStateOf(false) }
 
     var hidePokemonColor by remember { mutableStateOf<Color?>(CustomColors.hidePokemonColor) }
+
+    var buttonClickable by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         while (timerGameStatus) {
@@ -65,12 +67,14 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
         val points = ticks
 
         LaunchedEffect(Unit) {
+            buttonClickable = false
             gameTimerCount = 5 // Resetando o valor do Timer do Jogo
             ticks = 5000
             hidePokemonColor = null
 
             delay(500.milliseconds) // Delay 0.5 Seg. antes de trocar de jogo
 
+            buttonClickable =  true
             hidePokemonColor = CustomColors.hidePokemonColor
             timerWinGame = false
             gameViewModel.winGame(points)
@@ -78,6 +82,7 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
     }
     if(timerLossGame) {
         LaunchedEffect(Unit) {
+            buttonClickable = false
             gameTimerCount = 5 // Resetando o valor do Timer do Jogo
             timerGameStatus = false
             ticks = 5000
@@ -85,6 +90,7 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
 
             delay(2.seconds) // Delay 2 Seg. antes de finalizar o jogo
 
+            buttonClickable = true
             timerLossGame = false
             openDialog =  true
         }
@@ -148,7 +154,14 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
 
             LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                 items(game.pokemonList) { poke ->
-                    ButtonAnswer(poke = poke) {
+                    ButtonAnswer(
+                        poke = poke,
+                        enabled = buttonClickable,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(4.dp)
+                    ) {
                         if (game.checkResult(poke.name)) {
                             timerWinGame =  true
                         } else {
@@ -173,23 +186,26 @@ fun GameScreen(gameViewModel: GameViewModel, navController: NavController) {
 }
 
 @Composable
-fun ButtonAnswer(poke : PokemonResult, onClick : () -> Unit){
+fun ButtonAnswer(
+    poke : PokemonResult,
+    enabled : Boolean,
+    modifier: Modifier = Modifier,
+    onClick : () -> Unit
+){
     Row {
         Button(
             onClick = {
                 onClick()
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .padding(6.dp),
+            modifier = modifier,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = CustomColors.playColor,
                 contentColor = Color.Black
-            )
+            ),
+            enabled = enabled
         ) {
             Text(
-                text = poke.name.capitalize(),
+                text = poke.name.replaceFirstChar { it.uppercase() },
                 fontWeight = FontWeight.Bold
             )
         }
@@ -286,6 +302,7 @@ fun CardInsertPoints(
                         imageGender = R.drawable.treinador,
                         Modifier
                             .size(90.dp)
+                            .clip(CircleShape)
                     )
 
                     ImageChoose(
@@ -295,6 +312,7 @@ fun CardInsertPoints(
                         imageGender = R.drawable.treinadora,
                         Modifier
                             .size(90.dp)
+                            .clip(CircleShape)
                     )
                 }
             }
@@ -324,6 +342,7 @@ fun CardInsertPoints(
                         imageGender = R.drawable.team_red,
                         Modifier
                             .size(90.dp)
+                            .clip(CircleShape)
                     )
 
                     ImageChoose(
@@ -333,6 +352,7 @@ fun CardInsertPoints(
                         imageGender = R.drawable.team_blue,
                         Modifier
                             .size(90.dp)
+                            .clip(CircleShape)
                     )
 
                     ImageChoose(
@@ -342,6 +362,7 @@ fun CardInsertPoints(
                         imageGender = R.drawable.team_yellow,
                         Modifier
                             .size(90.dp)
+                            .clip(CircleShape)
                     )
                 }
             }
