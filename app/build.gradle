@@ -55,7 +55,7 @@ dependencies {
     implementation project(':injector')
     implementation project(':feature:game')
     implementation project(':feature:record')
-
-
     implementation project(path: ':core-android')
+
+    implementation Compose.compose_navigation_animation
 }
