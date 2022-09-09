@@ -1,4 +1,4 @@
-package com.core.data.implementation
+package com.example.core_android.data.implementation
 
 import com.core.data.errorhandler.ErrorEntity
 import com.core.data.errorhandler.ErrorHandler

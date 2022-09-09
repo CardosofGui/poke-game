@@ -3,7 +3,7 @@ package com.example.record.data.implementation
 import com.example.core_android.data.entity.ResultInsert
 import com.example.core_android.data.entity.UserPointsModel
 import com.core.data.errorhandler.Results
-import com.core.data.implementation.GeneralErrorHandlerImplementation
+import com.example.core_android.data.implementation.GeneralErrorHandlerImplementation
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*

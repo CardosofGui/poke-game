@@ -426,13 +426,8 @@ fun ImagePokemonHide(
     AnimatedContent(
         targetState = hidePokemonColor,
         transitionSpec = {
-            if(targetState == null) {
-                slideInVertically { height -> -height } + fadeIn() with
-                        slideOutVertically { height -> height } + fadeOut()
-            } else {
-                slideInVertically { height -> -height } + fadeIn() with
-                        slideOutVertically { height -> height } + fadeOut()
-            }
+            slideInVertically { height -> -height } + fadeIn() with
+                    slideOutVertically { height -> height } + fadeOut()
         }
     ) {
         Image(

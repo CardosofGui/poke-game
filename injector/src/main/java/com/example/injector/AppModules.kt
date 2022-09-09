@@ -1,7 +1,7 @@
 package com.example.injector
 
 import android.util.Log
-import com.core.data.implementation.GeneralErrorHandlerImplementation
+import com.example.core_android.data.implementation.GeneralErrorHandlerImplementation
 import com.example.game.data.implementation.InsertRecordImplementation
 import com.example.game.data.implementation.PokemonImplementation
 import com.example.game.data.repository.InsertRecordRepository
